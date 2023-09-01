@@ -76,7 +76,7 @@ def attractions():
             return jsonify(error_response), 400
             
         final_data = {
-            'nextPage': page,
+            'nextPage': page+1,
             'data': attractions_list
         }
         return Response(json.dumps(final_data,sort_keys=False), mimetype='application/json')
