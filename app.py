@@ -30,9 +30,10 @@ def attractions():
                 "message": "此頁面沒有資料"
             }
             return jsonify(error_response), 400
-        start_index = page * page_size+1
-        end_index = start_index + page_size-1
-        query = "SELECT * FROM attractions WHERE id BETWEEN %s AND %s;"
+        start_index = page * page_size
+        end_index = page_size
+        query = "SELECT * FROM attractions ORDER BY id LIMIT %s,%s;"
+        print(start_index,end_index)
         values = (start_index, end_index)
         cursor.execute(query, values)
         mysql_attractions_list = cursor.fetchall()
