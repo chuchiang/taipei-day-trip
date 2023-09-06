@@ -1,7 +1,7 @@
 
 //listbar 生成
 document.addEventListener("DOMContentLoaded", function () {
-    fetch('http://127.0.0.1:3000/api/mrts')
+    fetch(`/api/mrts`)
         .then(response => response.json())
         .then(data => {
 
@@ -46,9 +46,6 @@ function updateSlider() {
     console.log("aftermove:"+currentPosition)
     mrtList.style.transform = `translateX(-${currentPosition}px)`;
 }
-
-
-
 
 
 // 載入每頁的景點
