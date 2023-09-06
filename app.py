@@ -98,7 +98,8 @@ def attractions():
             'data': attractions_list
         }
         return Response(json.dumps(final_data,sort_keys=False), mimetype='application/json')
-    except Exception:
+    except Exception as e:
+        print(e)
         error_response = {
             "error": "true",
             "message": "伺服器內部錯誤"
@@ -140,7 +141,8 @@ def attractionID(attractionID):
         }
         # Response json.dumps() 避免自動排序
         return Response(json.dumps(final_data,sort_keys=False), mimetype='application/json')
-    except Exception:
+    except Exception as e:
+        print(e)
         error_response = {
             "error": "true",
             "message": "伺服器內部錯誤"
@@ -163,7 +165,8 @@ def mrts():
             'data': mrts_list
         }
         return jsonify(final_data)
-    except Exception:
+    except Exception as e:
+        print(e)
         error_response = {
             "error": "true",
             "message": "伺服器內部錯誤"
