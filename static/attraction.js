@@ -73,6 +73,9 @@ intersectionObserver.observe(targetElement);
 // 載入下一頁的資料
 function loadNextPage() {
     // 設置為正在載入中，防止重複載入
+    if (isLoading){
+        return;
+    }
     isLoading = true;
     fetch(`/api/attractions?page=${nextPage}`)
         .then(response => response.json())
@@ -132,11 +135,14 @@ function loadNextPage() {
                 // 如果API返回的資料為空，表示已經沒有下一頁了
                 nextPage = null;
             }
-            isLoading = false; // 載入完成
         })
-        .catch(error => console.error('錯誤：', error));
-    isLoading = false; // 載入出錯，需要重試
+        .catch(error => console.error('錯誤：', error))
+        .finally(() => {
+            isLoading = false;
+        });
 }
+
+
 
 //非同步請求keyword
 async function searchAttractions() {
