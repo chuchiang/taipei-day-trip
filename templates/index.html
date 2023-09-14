@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="../static/style.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!--連到css-->
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="navigition">
+            <div class="navigition_logo">
+                <h2>台北一日遊</h2>
+            </div>
+            <ul class="navigition_menu">
+                <li class="navigition_menu_item">預定行程</li>
+                <li class="navigition_menu_item">登入/註冊</li>
+            </ul>
+        </div>
+        <div class="hero">
+            <img class="hero_img "src="{{ url_for('static', filename='welcome_1600.jpg') }}" alt="welcome">
+            <div class="hero_box">
+            <div class="hero_slogan">
+                <h1>輕鬆享受台北一日悠閒</h1>
+                <p>探索每個角落，體驗城市的深度旅遊行程</p>
+                <div class="hero_slogan_input">
+                    <input class="hero_slogan_input_con" name="search" placeholder="輸入景點名稱查詢" id="keyword">
+                    <button onclick="searchAttractions()"><img src="{{ url_for('static', filename='icon/search.png') }}" alt="search button"></button>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="content">
+            <div class="content_listbar">
+                <button class="content_listbar_left"><img src="{{ url_for('static', filename='icon/arrow_left.png') }}" alt="arrow left"
+                        id="arrow_left"></button>
+                <div class="content_listbar_box">
+                    <ul class="content_listbar_mrt" id="mrt_list">
+                            <!-- <li class="content_listbar_mrt_name">123</li> -->
+                    </ul>
+                </div>
+                <button class="content_listbar_right"><img src="{{ url_for('static', filename='icon/arrow_right.png') }}" alt=" arrow
+                        right"id="arrow_right"></button>
+            </div>
+            <div class="content_list" id="content_list">
+            <!--<div class="content_list_att">
+                    <div class="content_list_att_img">
+                        <img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="picture">
+                        <span class="content_list_att_name">yayay</span>   
+                    </div>
+                    <ul class="content_list_att_con">
+                        <li class="content_list_att_con_mrt">123</li>
+                        <li class="content_list_att_con_catrgory">123</li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+        <div class="footer" id="judge_footer">
+            <span class="footer_p">
+                <p>COPYRIGHT © 2021 台北一日遊</p>
+            </span>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'attraction.js') }}"></script><!-- 連到js -->
+</body>
+
+</html>
