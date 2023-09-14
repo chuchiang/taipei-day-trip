@@ -57,25 +57,25 @@ img{
 .wrap{
     margin: 0 auto;
 }
-.navigition{
+.navigation{
     margin: 0 auto;
     display: flex;
     width: 1200px;
     justify-content: space-between;
     padding: 10px 0 10px 0;
 }
-.navigition_logo{
+.navigation_logo{
     font-size: 30px;
     color: #448899;
     font-weight: bold;
     line-height: 34px;
  
 }
-.navigition_menu{
+.navigation_menu{
     display:flex;
     justify-content: space-between;
 }
-.navigition_menu_item{
+.navigation_menu_item{
     padding: 10px;
     color: #666666;
     font-size: 16px;
@@ -137,12 +137,14 @@ img{
     font-size: 16px;
     line-height: 13.3px;
     bottom: 0;
+    padding-left: 16px;
 }
 .hero_slogan_input input::placeholder {
     color: #757575;
     font-weight: bold;
     font-size: 16px;
     line-height: 13.3px;
+
 }
 .hero_slogan_input button{
     background: #448899;
@@ -267,7 +269,7 @@ img{
     line-height: 13.3px;
 }
 @media (max-width: 1200px) {
-    .navigition{
+    .navigation{
         width: 100%;
     }
     .hero{
@@ -325,7 +327,7 @@ img{
 
 @media (max-width:600px) {
     
-    .navigition{
+    .navigation{
         width: 96.8%;
         padding-left: 10px;
     }

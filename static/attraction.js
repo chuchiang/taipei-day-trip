@@ -1,229 +1,191 @@
 
-//listbar 生成
-document.addEventListener("DOMContentLoaded", function () {
-    fetch(`/api/mrts`)
-        .then(response => response.json())
-        .then(data => {
 
-            data.data.forEach(attraction => {
-                // 創建<li>元素（MRT）
-                let mrtListItem = document.createElement('li');
-                mrtListItem.classList.add('content_listbar_mrt_name');
-                mrtListItem.textContent = attraction;
-                // 將捷運站名稱作為 data-mrt 屬性添加到 <li> 元素
-                mrtListItem.setAttribute('data_mrt', attraction);
+//取得目前瀏覽器網址
+let currentURL = window.location.href;
 
-                // 將最終創建的元素添加到文檔中
-                let mrtListContainer = document.getElementById('mrt_list'); // 替換成你想要添加的父容器的ID
-                mrtListContainer.appendChild(mrtListItem);
-
-            });
-        })
-        .catch(error => console.error('錯誤：', error));
-});
-//mrt移動
-let mrtList = document.getElementById("mrt_list");
-let arrowLeft = document.getElementById("arrow_left");
-let arrowRight = document.getElementById("arrow_right");
-let mrtName = document.querySelectorAll("content_listbar_mrt_name");
-let currentPosition=0;
-let currentIndex = 0;
-
-arrowRight.addEventListener("click", () => {
-    currentPosition+=110;
-    updateSlider();
-});
-
-arrowLeft.addEventListener("click", () => {
-    currentPosition-=110
-    updateSlider();
-});
-    
-//限制li移動
-function updateSlider() {
-    currentPosition = Math.max(currentPosition, 0);
-    currentPosition = Math.min(currentPosition, mrtList.scrollWidth - mrtList.clientWidth);
-    console.log("aftermove:"+currentPosition)
-    mrtList.style.transform = `translateX(-${currentPosition}px)`;
-}
+// 利用正則表達式取得網址中的id部分
+let match = currentURL.match(/\/attraction\/(\d+)/);
+let id = match[1];
 
 
-// 載入每頁的景點
-let nextPage = 0; // 初始頁數
-let isLoading = false; // 是否正在載入中
-// 創建IntersectionObserver實例
-let intersectionObserver = new IntersectionObserver(entries => {
-    // 如果正在載入中或者已經沒有下一頁，則不執行載入
-    if (isLoading || nextPage === null) {
-        return;
-    }
-    // 檢查每個觀察目標的進入狀態
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // 載入下一頁的資料
-            loadNextPage();
-        }
-    });
-}, { threshold: 0.5 }); // 定義觸發閾值
 
-// 將觀察目標綁定到某個元素（例如，頁面底部的一個元素）
-let targetElement = document.getElementById('judge_footer'); // 替換為你的觸發元素
-intersectionObserver.observe(targetElement);
-
-// 載入下一頁的資料
-function loadNextPage() {
-    // 設置為正在載入中，防止重複載入
-    if (isLoading){
-        return;
-    }
-    isLoading = true;
-    fetch(`/api/attractions?page=${nextPage}`)
+let fetchUrl = async()=>{
+// 如果成功匹配，match[1] 就是取得的id值
+    if (id<=58) {
+        await fetch(`/api/attraction/${id}`)
         .then(response => response.json())
         .then(data => {
             let dataLength = data.data.length;
-            if (dataLength > 0) {
-                // 處理從API返回的資料
-                data.data.forEach(attraction => {
-                    // 創建外層<div>元素
-                    let attractionItem = document.createElement('div');
-                    attractionItem.classList.add('content_list_att');
-                    attractionItem.id = 'attraction_list'; // 如果需要添加id
+                if (dataLength > 0) {
+                    data.data.forEach(attraction =>{
+            
+                        // 創建包含圖片和名稱的<ul>元素
+                        let attractionImgsContent = document.createElement('ul');
+                        attractionImgsContent.classList.add('attraction_imgs_content');
+                        attractionImgsContent.id = "slider";
 
-                    // 創建包含圖片和名稱的<div>元素
-                    let imageContainer = document.createElement('div');
-                    imageContainer.classList.add('content_list_att_img');
+                        // 創建dot <ul>元素
+                        let attractionImgsDots = document.createElement('ul');
+                        attractionImgsDots.classList.add('attraction_imgs_btns');
+                        attractionImgsDots.id = "dots";                    
 
-                    // 創建圖片<img>元素
-                    let image = document.createElement('img');
-                    image.src = attraction.images[0];
-                    image.alt = 'picture';
+                        attraction.images.forEach((datImages) =>{
+                    
+                            let attractionImgsContentUnactive = document.createElement('li');
+                            attractionImgsContentUnactive.classList.add('attraction_imgs_content_unactive');
+                            // 創建圖片<img>元素
+                            let imagenmore = document.createElement('img');
+                            imagenmore.src = datImages;
+                            imagenmore.alt = 'picture';
+                            attractionImgsContentUnactive.appendChild(imagenmore);
+                            attractionImgsContent.appendChild(attractionImgsContentUnactive);
 
-                    // 創建名稱<span>元素
-                    let nameSpan = document.createElement('span');
-                    nameSpan.classList.add('content_list_att_name');
-                    nameSpan.textContent = attraction.name;
+                            let attractionImgsDot = document.createElement('li');
+                            attractionImgsDots.appendChild(attractionImgsDot);
 
-                    // 創建包含其他信息的<ul>元素
-                    let infoList = document.createElement('ul');
-                    infoList.classList.add('content_list_att_con');
+                        })
 
-                    // 創建<li>元素（MRT）
-                    let mrtListItem = document.createElement('li');
-                    mrtListItem.classList.add('content_list_att_con_mrt');
-                    mrtListItem.textContent = attraction.mrt;
+                        //name
+                        let attractionTourName = document.createElement('div');
+                        attractionTourName.classList.add('attraction_tour_name');
+                        attractionTourName.textContent = attraction.name;
+                
+                        //category
+                        let attractionTourCategory = document.createElement('div');
+                        attractionTourCategory.classList.add('attraction_tour_category');
+                        attractionTourCategory.textContent = attraction.category+" at "+attraction.mrt;
 
-                    // 創建<li>元素（類別）
-                    let categoryListItem = document.createElement('li');
-                    categoryListItem.classList.add('content_list_att_con_catrgory');
-                    categoryListItem.textContent = attraction.category;
+                        //description
+                        let contentDescription = document.createElement('div');
+                        contentDescription.classList.add('content_description');
+                        contentDescription.textContent = attraction.description;
 
-                    // 將子元素添加到適當的父元素中
-                    imageContainer.appendChild(image);
-                    imageContainer.appendChild(nameSpan);
-                    infoList.appendChild(mrtListItem);
-                    infoList.appendChild(categoryListItem);
-                    attractionItem.appendChild(imageContainer);
-                    attractionItem.appendChild(infoList);
+                        //address
+                        let contentAddressContent = document.createElement('div');
+                        contentAddressContent.classList.add('content_address_content');
+                        contentAddressContent.textContent = attraction.address;
 
-                    // 將最終創建的元素添加到文檔中
-                    let attractionListContainer = document.getElementById('content_list'); // 替換成你想要添加的父容器的ID
-                    attractionListContainer.appendChild(attractionItem);
-                });
-                // 更新下一頁的頁數
-                nextPage = data.nextPage; // 假設API回傳了下一頁的頁數，如果沒有則設為null
-            } else {
-                // 如果API返回的資料為空，表示已經沒有下一頁了
-                nextPage = null;
-            }
-        })
-        .catch(error => console.error('錯誤：', error))
-        .finally(() => {
-            isLoading = false;
+                        //transport
+                        let contentTransportsContent = document.createElement('div');
+                        contentTransportsContent.classList.add('content_transports_content');
+                        contentTransportsContent.textContent = "捷運站名："+attraction.transport;
+
+
+                        // 將最終創建的元素添加到文檔中
+                        let attractionContent = document.getElementById('attraction_imgs'); // 替換成你想要添加的父容器的ID
+                        let attractionTour = document.getElementById('tour');
+                        attractionContent.prepend(attractionImgsContent);
+                        attractionTour.prepend(attractionTourCategory);  
+                        attractionTour.prepend(attractionTourName);   
+                        let content = document.getElementById('content');
+                        content.prepend(contentDescription);
+                        let contentAddress = document.getElementById('contentAddress');
+                        contentAddress.appendChild(contentAddressContent);
+                        let contentTransport = document.getElementById('contentTransport');
+                        contentTransport.appendChild(contentTransportsContent);
+                        attractionContent.appendChild(attractionImgsDots)
+
+                    });
+
+                }
+            
+
         });
+
+    }
+    else{
+        let attraction = document.getElementById('attraction');
+        attraction.innerHTML="";
+        attraction.textContent="沒有此景點";
+        content.innerHTML="";
+    }
 }
 
+    
 
+window.onload = async function() {
+    await fetchUrl();
+    let rightBtn = document.getElementById('rightbtn');
+    let leftBtn = document.getElementById('leftbtn');
+    let slider = document.getElementById('slider');
+    let dots = document.getElementById('dots');
+    let children = dots.children;
 
-//非同步請求keyword
-async function searchAttractions() {
-    let keyword = document.getElementById('keyword').value;
-    let attractionList = document.getElementById('content_list');
-
-    // 使用fetch()向API發送請求
-    try {
-        let response = await fetch(`/api/attractions?keyword=${keyword}`);
-        let dataList = await response.json();
-        let data = dataList.data;
-        nextPage=null;
-        // 清空景點列表
-        attractionList.innerHTML = '';
-
-        if (data !== undefined && data.length > 0) {
-            // 顯示搜尋結果
-            data.forEach(attraction => {
-                // 創建外層<div>元素
-                let attractionItem = document.createElement('div');
-                attractionItem.classList.add('content_list_att');
-                attractionItem.id = 'attraction_list'; // 如果需要添加id
-
-                // 創建包含圖片和名稱的<div>元素
-                let imageContainer = document.createElement('div');
-                imageContainer.classList.add('content_list_att_img');
-
-                // 創建圖片<img>元素
-                let image = document.createElement('img');
-                image.src = attraction.images[0];
-                image.alt = 'picture';
-
-                // 創建名稱<span>元素
-                let nameSpan = document.createElement('span');
-                nameSpan.classList.add('content_list_att_name');
-                nameSpan.textContent = attraction.name;
-
-                // 創建包含其他信息的<ul>元素
-                let infoList = document.createElement('ul');
-                infoList.classList.add('content_list_att_con');
-
-                // 創建<li>元素（MRT）
-                let mrtListItem = document.createElement('li');
-                mrtListItem.classList.add('content_list_att_con_mrt');
-                mrtListItem.textContent = attraction.mrt;
-
-                // 創建<li>元素（類別）
-                let categoryListItem = document.createElement('li');
-                categoryListItem.classList.add('content_list_att_con_catrgory');
-                categoryListItem.textContent = attraction.category;
-
-                // 將子元素添加到適當的父元素中
-                imageContainer.appendChild(image);
-                imageContainer.appendChild(nameSpan);
-                infoList.appendChild(mrtListItem);
-                infoList.appendChild(categoryListItem);
-                attractionItem.appendChild(imageContainer);
-                attractionItem.appendChild(infoList);
-
-                // 將最終創建的元素添加到文檔中
-                let attractionListContainer = document.getElementById('content_list'); // 替換成你想要添加的父容器的ID
-                attractionListContainer.appendChild(attractionItem);
-            });
-        } else {
-            // 顯示沒有結果
-            attractionList.textContent = '沒有搜尋到任何景點';
-            nextPage=null;
+    // 取得 ul 元素下的所有 li 元素
+    let liElements = slider.getElementsByTagName('li');
+    let imgCounts = liElements.length;
+    rightBtn.addEventListener("click", () => (slideProxy.index += 1));
+    leftBtn.addEventListener("click", () => (slideProxy.index -= 1));
+    setClickEventToDots();
+    window.oversize=debounce(calculateWidth);
+    let slideProps = { index: 0 };
+    let slideHanlder = {
+        set (obj,prop,value){
+            if (prop == "index"){
+                if (value < 0 || value >= imgCounts) return;
+                setDotToInactive();
+                obj[prop]=value;
+                calculateWidth();
+                setActiveDot();
+            }
+        },
+    };
+    let slideProxy = new Proxy(slideProps,slideHanlder);
+    setActiveDot();
+    function calculateWidth(){
+        let imgWith = slider.offsetWidth;
+        let recomputeWidth = slideProps.index*imgWith;
+        slider.scrollLeft = recomputeWidth;
+       
+    }
+    function setDotToInactive(){
+        let{index}=slideProps
+        children[index].classList.remove('dot--active')
+    }
+    function setActiveDot() {
+        let { index } = slideProps
+        children[index].classList.add('dot--active')
+    }
+    function setClickEventToDots() {
+        for (let i = 0; i < dots.children.length; i++) {
+          const li = dots.children[i]
+          li.addEventListener('click', () => {
+            slideProxy.index = i
+          })
         }
-    } catch (error) {
-        console.error('搜尋景點時出錯：', error);
-    }
+      }
+    function debounce(func,timeout=100){
+        let timer;
+        return(...args)=>{
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, timeout);
+        }
+    } 
+       
 }
 
 
-//mrt 點選後尋關鍵字
-//監聽 li 點擊事件
-let keywordInput = document.getElementById('keyword');
-mrtList.addEventListener('click', (event) => {
-    if (event.target && event.target.tagName === 'LI') {
-        let mrtName = event.target.getAttribute('data_mrt');
-        keywordInput.value = mrtName; // 填入捷運站名稱到搜尋框
-        searchAttractions(); // 呼叫搜尋景點函數
-    }
+
+document.addEventListener('DOMContentLoaded',function(){
+    let morningRadio = document.getElementById('morning_radio');
+    let afternoonRadio = document.getElementById('afternoon_radio');
+    let tripPrice = document.getElementById('trip_price');
+    let priceNotice = document.getElementById('price_notice');
+    morningRadio.addEventListener('click',function(){
+        priceNotice.style.display="none";
+        tripPrice.textContent="新台幣 2000 元"
+
+    });
+    afternoonRadio.addEventListener('click',function(){
+        priceNotice.style.display="none";
+        tripPrice.textContent="新台幣 2500 元"
+    });
+
 });
+
+
+
+
+
