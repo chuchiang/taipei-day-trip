@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TaipeiTrip</title>
     <!-- <link rel="stylesheet" href="../static/style.css"> -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!--連到css-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}"> <!--連到css-->
 </head>
 
 <body>
     <div class="wrap">
-        <div class="navigition">
-            <div class="navigition_logo">
+        <div class="navigation">
+            <div class="navigation_logo">
                 <h2>台北一日遊</h2>
             </div>
-            <ul class="navigition_menu">
-                <li class="navigition_menu_item">預定行程</li>
-                <li class="navigition_menu_item">登入/註冊</li>
+            <ul class="navigation_menu">
+                <li class="navigation_menu_item">預定行程</li>
+                <li class="navigation_menu_item">登入/註冊</li>
             </ul>
         </div>
         <div class="hero">
@@ -66,7 +66,7 @@
             </span>
         </div>
     </div>
-    <script type="text/javascript" src="{{ url_for('static', filename = 'attraction.js') }}"></script><!-- 連到js -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script><!-- 連到js -->
 </body>
 
 </html>

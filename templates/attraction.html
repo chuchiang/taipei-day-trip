@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attraction</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='attraction.css') }}"> <!--連到css-->
+</head>
+</head>
+<body>
+    <div class="wrap">
+        <div class="navigation">
+            <div class="navigation_logo">
+                <a href="/"><h2>台北一日遊</h2></a>
+            </div>
+            <ul class="navigation_menu">
+                <li class="navigation_menu_item">預定行程</li>
+                <li class="navigation_menu_item">登入/註冊</li>
+            </ul>
+        </div>
+        <div class="separator_logo"></div>
+        <div class="attraction" id="attraction">
+            <div class="attraction_imgs" id="attraction_imgs">
+                <!-- <ul class="attraction_imgs_content" id="slider">
+                    <li class="attraction_imgs_content_unactive"><img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="picture"></li>
+                    <li class="attraction_imgs_content_unactive"><img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="picture"></li>
+                    <li class="attraction_imgs_content_unactive"><img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="picture"></li>
+               
+                </ul> -->
+                <button class="attraction_imgs_leftbtn" id="leftbtn"><img src="{{ url_for('static', filename='icon/btn_leftArrow.png') }}" alt="leftArrow"></button>
+                <button class="attraction_imgs_rightbtn" id="rightbtn"><img src="{{ url_for('static', filename='icon/btn_rightArrow.png') }}" alt="rightArrow"></button>
+                <!-- <ul id="dots" class="attraction_imgs_btns">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul> -->
+            </div>
+             <div class="attraction_tour" id="tour">
+                     <!--<div class="attraction_tour_name"><h3>平安鐘</h3></div>
+                    <div class="attraction_tour_category"><p>公共藝術 at 忠孝復興</p></div> -->
+                <div class="attraction_tour_booking">
+                    <div class="attraction_tour_booking_trip b-16">訂購導覽行程</div>
+                    <div class="attraction_tour_booking_trip m-16s">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+                    <div class="attraction_tour_booking_trip m-16"><span class="b-16">選擇日期：</span><input type="date" class="attraction_tour_booking_trip_calendar"></div>
+                    <div class="attraction_tour_booking_trip m-16"><span class="b-16">選擇時間：</span><input  type="radio" class="attraction_tour_booking_trip_radiom" name="time" value="morning" id="morning_radio" >上半天<input  type="radio" class="attraction_tour_booking_trip_radioa" name="time" value="afternoon" id="afternoon_radio">下半天</div>
+                    <div class="attraction_tour_booking_trip">
+                        <span class="b-16">導覽費用：</span>
+                        <span class="attraction_tour_booking_trip_price m-16" id="price_notice">請先選擇時段</span>
+                        <span class="attraction_tour_booking_trip_price m-16" id="trip_price"></span>
+                        </div>
+                    <button class="attraction_tour_booking_btn">開始預約行程</button>
+                </div>
+            </div>
+        </div>
+        <div class="separator_img" id="separator_img"></div>
+        <div class="content" id="content">
+            <!-- <div class="content_description r-16">平安鐘祈求大家的平安，這是為了紀念921地震週年的設計，在喧鬧的廣場上每個小時鳴鐘，保佑平安，祈禱臺灣不會再發生這樣的天災。雙手合十加上108個黃色的琉璃乳丁，隨著緩緩流下的水，在底下的一個小噴泉噴出。雙手合十的意義，一個是祈福，一個是包容，教我們要包容這樣的改變，撫平這樣的傷口。下面的水緩緩流出，代表著人的生命力是不斷地延續下去。緩緩地鐘聲，卻帶來心中的寧靜。 這個平安鐘是由建築師姚仁喜與琉璃創作家王俠軍共同設計，長6公尺、寬5公尺，以鑄銅製成，由法鼓山文教基金會全額出資。平安鐘點綴都市景觀，不時提醒大家，面對刻骨銘心的災難痛苦，更應該有謙卑的一顆心。</div> -->
+            <div class="content_address" id="contentAddress">
+                <div class="content_address_name b-16">景點地址：</div>
+                <!-- <div class="content_address_content r-16">臺北市 大安區忠孝東路4段</div> -->
+            </div>
+            <div class="content_transport" id="contentTransport">
+                <div class="content_transport_name b-16">交通方式：</div>
+                <!-- <div class="content_transports_content r-16">捷運站名：忠孝復興站4號出口1.公車：204、212、212直、232、232副、262、262(區間)、278、299、521、605、605(副)、605(新台五線)、667、903、忠孝新幹線至頂好市場站 2.車位：太平洋崇光百貨地下停車場或市民大道附近地下停車場 -->
+                </div>                
+            </div>
+        </div>
+        <div class="footer" id="judge_footer">
+            <span class="footer_p">
+                <p>COPYRIGHT © 2021 台北一日遊2</p>
+            </span>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'attraction.js') }}"></script><!-- 連到js -->
+</body>
+</html>
