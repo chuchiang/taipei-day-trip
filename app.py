@@ -1,23 +1,27 @@
+import jwt
+import time
+from mysql.connector import pooling
+import json
 from flask import *
 from flask import Flask
-app=Flask(__name__,static_folder='static')
-app.config["JSON_AS_ASCII"]=False
-app.config["TEMPLATES_AUTO_RELOAD"]=True
-import json
-from mysql.connector import pooling
+app = Flask(__name__, static_folder='static')
+app.config["JSON_AS_ASCII"] = False
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 #  創建一個連接池
 cnx_pool = pooling.MySQLConnectionPool(
-    user='root', 
-    password='2926', 
-    host='localhost', 
-    database='taipei_trip', 
-    pool_name='pool_name', 
-    buffered= True, 
+    user='root',
+    password='2926',
+    host='localhost',
+    database='taipei_trip',
+    pool_name='pool_name',
+    buffered=True,
     pool_size=10)
 
-#定義一個函數來執行資料庫操作
-def execute_query(query,values):
+# 定義一個函數來執行資料庫操作
+
+
+def execute_query(query, values):
     cnx = cnx_pool.get_connection()
     cursor = cnx.cursor()
     result = None  # 初始化 result 為 None
@@ -48,22 +52,22 @@ def attractions():
             return jsonify(error_response), 400
         start_index = page * page_size
         end_index = page_size
-        if keyword =="":
+        if keyword == "":
             query = "SELECT * FROM attractions ORDER BY id LIMIT %s,%s;"
             values = (start_index, end_index)
-            mysql_attractions_list=execute_query(query, values)
-            #判斷下一頁
+            mysql_attractions_list = execute_query(query, values)
+            # 判斷下一頁
             query = "SELECT * FROM attractions ORDER BY id LIMIT %s,%s;"
             values = (start_index, end_index+1)
-            judge_attractions_list=execute_query(query, values)
+            judge_attractions_list = execute_query(query, values)
         else:
-            query = "SELECT * FROM attractions WHERE name LIKE %s OR mrt LIKE %s ORDER BY id LIMIT %s,%s;"
-            values = (f"%{keyword}%", f"%{keyword}%",start_index, end_index)
-            mysql_attractions_list=execute_query(query, values)
-    
-            #判斷下一頁
-            query = "SELECT * FROM attractions WHERE name LIKE %s OR mrt LIKE %s ORDER BY id LIMIT %s,%s;"
-            values = (f"%{keyword}%", f"%{keyword}%",0, 13)
+            query = "SELECT * FROM attractions WHERE name LIKE %s OR mrt LIKE %s ORDER BY id LIMIT %s OFFSET %s;"
+            values = (f"%{keyword}%", f"%{keyword}%", end_index, start_index)
+            mysql_attractions_list = execute_query(query, values)
+
+            # 判斷下一頁
+            query = "SELECT * FROM attractions WHERE name LIKE %s OR mrt LIKE %s ORDER BY id LIMIT %s OFFSET %s;"
+            values = (f"%{keyword}%", f"%{keyword}%", 13, start_index)
             judge_attractions_list = execute_query(query, values)
 
         attractions_list = []
@@ -79,25 +83,25 @@ def attractions():
                 'lat': float(mysql_attractions[7]),
                 'lng': float(mysql_attractions[8]),
                 'images': mysql_attractions[9].split(',')
-                }
+            }
             attractions_list.append(data)
 
-        if len(attractions_list)==0:
+        if len(attractions_list) == 0:
             error_response = {
-				"error": "true",
-				"message": "沒有此景點資料"
-			}
+                "error": "true",
+                "message": "沒有此景點資料"
+            }
             return jsonify(error_response), 400
-        
-        if len(judge_attractions_list) == 13 : #判斷頁面數量13
-            nextPage=page+1 
+
+        if len(judge_attractions_list) == 13:  # 判斷頁面數量13
+            nextPage = page+1
         else:
-            nextPage=None
+            nextPage = None
         final_data = {
             'nextPage': nextPage,
             'data': attractions_list
         }
-        return Response(json.dumps(final_data,sort_keys=False), mimetype='application/json')
+        return Response(json.dumps(final_data, sort_keys=False), mimetype='application/json')
     except Exception as e:
         print(e)
         error_response = {
@@ -140,7 +144,7 @@ def attractionID(attractionID):
             'data': id_list
         }
         # Response json.dumps() 避免自動排序
-        return Response(json.dumps(final_data,sort_keys=False), mimetype='application/json')
+        return Response(json.dumps(final_data, sort_keys=False), mimetype='application/json')
     except Exception as e:
         print(e)
         error_response = {
@@ -154,8 +158,8 @@ def attractionID(attractionID):
 def mrts():
     try:
         query = "SELECT mrt, COUNT(*) AS station_count FROM attractions GROUP BY mrt ORDER BY station_count DESC"
-        values=()
-        mysql_mrts_list = execute_query(query,values)
+        values = ()
+        mysql_mrts_list = execute_query(query, values)
         mrts_list = []
         for mrts_mysql in mysql_mrts_list:
             data = mrts_mysql[0]
@@ -173,20 +177,126 @@ def mrts():
         }
         return jsonify(error_response), 500
 
+# 註冊
+
+
+@app.route("/api/user",methods=["POST"])
+def user():
+    try:
+        signup_name = request.form["signUpName"]
+        signup_email = request.form["signUpEnail"]
+        signup_password = request.form["signUpPassword"]
+        query = "SELECT*FROM members WHERE email=%s"
+        values = (signup_email,)
+        email_task = execute_query(query, values)
+
+        if email_task is None:
+            query = "INSERT INTO members(name,email,password)VALUES(%s,%s,%s);"
+            values = (signup_name, signup_email, signup_password)
+            execute_query(query, values)
+            response = {
+                "ok": "true",
+            }
+            return jsonify(response), 200
+        else:
+            error_response = {
+                "error": "true",
+                "message": "email已經註冊過"
+            }
+            return jsonify(error_response), 400
+
+    except Exception as e:
+        print(e)
+        error_response = {
+            "error": "true",
+            "message": "伺服器內部錯誤"
+        }
+        return jsonify(error_response), 500
+
+
+# 當前登入資訊
+
+@app.route("/api/user/auth", methods=["PUT"])
+def signin():
+    try:
+        signin_email = request.form["signInEmail"]
+        signin_password = request.form["signInPassword"]
+        query = "SELECT*FROM members WHERE email LIKE%s and password LIKE%s"
+        values = (signin_email, signin_password)
+        signin_task = execute_query(query, values)
+        
+        if len(signin_task) != 0:
+            signin_data = signin_task[0]
+            payload = {
+                "id": signin_data[0],
+                "name": signin_data[1],
+                "email": signin_email,
+                "password": signin_password,
+                "exp":  int(time.time()) + 86400 * 7
+            }
+            secret = "taipei123"
+            token = jwt.encode(payload, secret, algorithm='HS256')
+            return jsonify({"token": token})  # 將 token 包裝成 JSON 物件
+        else:
+            error_response = {
+                "data": "true",
+                "message": "帳號或密碼錯誤"
+            }
+            return jsonify(error_response), 400
+
+    except Exception as e:
+        print(e)
+        error_response = {
+            "error": "true",
+            "message": "伺服器內部錯誤2"
+        }
+        return jsonify(error_response), 500
+
+
+@app.route("/api/user/auth", methods=["GET"])
+def currect():
+    try:
+        print(request)
+        token = request.headers.get('Authorization').split(' ')[1]
+        payload = jwt.decode(token, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
+        
+        user_info = {
+            'id': payload['id'],
+            'name': payload['name'],
+            'email': payload['email']
+        }    
+            # print(user_info)
+        return jsonify({'data': user_info}), 200
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "true", "message": "Token 過期"}), 401
+    except jwt.DecodeError:
+        return jsonify({"error": "true", "message": "Token 解碼失敗"}), 401
+    except Exception as e:
+        print(e)
+        return jsonify({"data": "null"})
+
+
 # Pages
 @app.route("/")
 def index():
-	return render_template("index.html")
+    return render_template("index.html")
+
+
 @app.route("/attraction/<id>")
 def attraction(id):
-	return render_template("attraction.html")
+    return render_template("attraction.html")
+
+
 @app.route("/booking")
 def booking():
-	return render_template("booking.html")
+    return render_template("booking.html")
+
+
 @app.route("/thankyou")
 def thankyou():
-	return render_template("thankyou.html")
+    return render_template("thankyou.html")
 
 
+app.run(host="0.0.0.0", port=3000, debug=True)
 
-app.run(host="0.0.0.0", port=3000)
+# print(app.url_map)

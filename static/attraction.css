@@ -226,7 +226,6 @@ li.dot--active {
     align-items: center;
 }
 
-
 .attraction_tour_booking_trip_calendar::-webkit-calendar-picker-indicator {
     background-image: url("icon/calendar.png");
     background-size: cover;

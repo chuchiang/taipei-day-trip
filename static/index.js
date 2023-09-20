@@ -26,24 +26,24 @@ let mrtList = document.getElementById("mrt_list");
 let arrowLeft = document.getElementById("arrow_left");
 let arrowRight = document.getElementById("arrow_right");
 let mrtName = document.querySelectorAll("content_listbar_mrt_name");
-let currentPosition=0;
+let currentPosition = 0;
 let currentIndex = 0;
 
 arrowRight.addEventListener("click", () => {
-    currentPosition+=110;
+    currentPosition += 110;
     updateSlider();
 });
 
 arrowLeft.addEventListener("click", () => {
-    currentPosition-=110
+    currentPosition -= 110
     updateSlider();
 });
-    
+
 //限制li移動
 function updateSlider() {
     currentPosition = Math.max(currentPosition, 0);
     currentPosition = Math.min(currentPosition, mrtList.scrollWidth - mrtList.clientWidth);
-    console.log("aftermove:"+currentPosition)
+    console.log("aftermove:" + currentPosition)
     mrtList.style.transform = `translateX(-${currentPosition}px)`;
 }
 
@@ -73,7 +73,7 @@ intersectionObserver.observe(targetElement);
 // 載入下一頁的資料
 function loadNextPage() {
     // 設置為正在載入中，防止重複載入
-    if (isLoading){
+    if (isLoading) {
         return;
     }
     isLoading = true;
@@ -88,12 +88,12 @@ function loadNextPage() {
                     let attractionItem = document.createElement('div');
                     attractionItem.classList.add('content_list_att');
                     attractionItem.id = attraction.id;
-                    
+
                     // 設定onclick事件
-                    attractionItem.onclick = function() {
+                    attractionItem.onclick = function () {
                         window.location.href = '/attraction/' + attraction.id;
                     };
-                    
+
                     // 創建包含圖片和名稱的<div>元素
                     let imageContainer = document.createElement('div');
                     imageContainer.classList.add('content_list_att_img');
@@ -159,7 +159,7 @@ async function searchAttractions() {
         let response = await fetch(`/api/attractions?keyword=${keyword}`);
         let dataList = await response.json();
         let data = dataList.data;
-        nextPage=null;
+        nextPage = null;
         // 清空景點列表
         attractionList.innerHTML = '';
 
@@ -170,9 +170,9 @@ async function searchAttractions() {
                 let attractionItem = document.createElement('div');
                 attractionItem.classList.add('content_list_att');
                 attractionItem.id = attraction.id;
-                    
+
                 // 設定onclick事件
-                attractionItem.onclick = function() {
+                attractionItem.onclick = function () {
                     window.location.href = '/attraction/' + attraction.id;
                 };
 
@@ -219,7 +219,7 @@ async function searchAttractions() {
         } else {
             // 顯示沒有結果
             attractionList.textContent = '沒有搜尋到任何景點';
-            nextPage=null;
+            nextPage = null;
         }
     } catch (error) {
         console.error('搜尋景點時出錯：', error);
@@ -237,3 +237,71 @@ mrtList.addEventListener('click', (event) => {
         searchAttractions(); // 呼叫搜尋景點函數
     }
 });
+
+
+// fetch("/api/user/auth", {
+//             method: "PUT",
+//         })
+//             .then(function (response) {
+//                 return response.json();
+//             })
+//             .then(function (data) {
+//                 if (data.token) {
+//                     localStorage.setItem('jwtToken', data.token);
+//                     console.log(data.token)
+//                     console.log("登入成功");
+//                 } else {
+//                     console.log("登入失敗");
+//                 }
+//             })
+ 
+
+
+// 將 token 儲存在 Local Storage 中
+
+
+let fetchUrl = async () => {
+    try {
+        await fetch("/api/user/auth", {
+            method: "PUT",
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.token) {
+                    localStorage.setItem('jwtToken', data.token);
+                    console.log("登入成功");
+                } else {
+                    console.log("登入失敗");
+                }
+            })
+    } catch (error) {
+        console.error('token出錯：', error);
+    }
+}
+
+window.onload = async function () {
+    try {
+        await fetchUrl();
+        let token = localStorage.getItem('jwtToken');
+        debugger
+        fetch("/api/user/auth", {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                return response.json();            
+            })
+            .then(function (data) {
+                console.log(data.token)
+            })
+
+    } catch (error) {
+        console.error('驗證出錯：', error.message);
+    }
+
+};

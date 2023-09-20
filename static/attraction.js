@@ -104,48 +104,57 @@ let fetchUrl = async()=>{
     
 
 window.onload = async function() {
-    await fetchUrl();
+    await fetchUrl();//await 等待fetchUrl執行完後才執行
     let rightBtn = document.getElementById('rightbtn');
     let leftBtn = document.getElementById('leftbtn');
     let slider = document.getElementById('slider');
     let dots = document.getElementById('dots');
-    let children = dots.children;
+    let children = dots.children;//dots 子元素存在children
 
-    // 取得 ul 元素下的所有 li 元素
-    let liElements = slider.getElementsByTagName('li');
-    let imgCounts = liElements.length;
-    rightBtn.addEventListener("click", () => (slideProxy.index += 1));
-    leftBtn.addEventListener("click", () => (slideProxy.index -= 1));
+    let liElements = slider.getElementsByTagName('li');// 取得 ul 元素下的所有 li 元素
+    let imgCounts = liElements.length;//取得liElements長度，為圖片個數
+    rightBtn.addEventListener("click", () => (slideProxy.index += 1));//rightBtn點擊後slideProxy.index 值+1
+    leftBtn.addEventListener("click", () => (slideProxy.index -= 1));//leftBtn點擊後slideProxy.index 值-+1
     setClickEventToDots();
-    window.oversize=debounce(calculateWidth);
-    let slideProps = { index: 0 };
-    let slideHanlder = {
-        set (obj,prop,value){
+    window.oversize=debounce(calculateWidth);//將 calculateWidth 函式包裝在 debounce 函式中，賦值給全局變數 oversize
+    let slideProps = { index: 0 };//slideProps 屬性 index，其初始值為 0。
+    let slideHanlder = {//slideHandler 的物件，這個物件將用作後面代理（Proxy）的處理器，用來控制對 slideProps 物件的操作
+        set (obj,prop,value){//set 方法 這個方法會在對 slideProps 物件的屬性進行設置（修改）時被調用。它接受三個參數：obj：被代理的目標物件，即 slideProps。prop：被設置的屬性名稱，這裡是 "index"。value：要設置的新值。
             if (prop == "index"){
-                if (value < 0 || value >= imgCounts) return;
+                if (value >= imgCounts) {
+                    value = value % imgCounts; //value 的範圍在 0 都在第一頁
+                }
+                if (value < 0){ //value 的範圍是負數都停在第一張
+                    return;
+                }
+                console.log(value)
                 setDotToInactive();
-                obj[prop]=value;
+                obj[prop]=value;//slideProps 物件中的 "index" 屬性設置為新的值 value，這一行實際上修改了 slideProxy.index
                 calculateWidth();
                 setActiveDot();
             }
         },
     };
-    let slideProxy = new Proxy(slideProps,slideHanlder);
+    let slideProxy = new Proxy(slideProps,slideHanlder);//創建了一個 Proxy 物件 slideProxy，它會監聽 slideProps 物件的變化
     setActiveDot();
+    //calculateWidth 函式，用來計算輪播容器的寬度，並將 slider 容器捲動到相應位置，以顯示當前圖片。
     function calculateWidth(){
         let imgWith = slider.offsetWidth;
         let recomputeWidth = slideProps.index*imgWith;
         slider.scrollLeft = recomputeWidth;
-       
     }
+    
+    //setDotToInactive 函式，將當前活動的指示點設置為非活動狀態
     function setDotToInactive(){
         let{index}=slideProps
         children[index].classList.remove('dot--active')
     }
+    //setActiveDot 函式，將當前圖片對應的指示點設置為活動狀態
     function setActiveDot() {
         let { index } = slideProps
         children[index].classList.add('dot--active')
     }
+    //為所有指示點添加點擊事件的監聽器。當某個指示點被點擊時，會觸發箭頭函式，將相應的圖片顯示出來
     function setClickEventToDots() {
         for (let i = 0; i < dots.children.length; i++) {
           const li = dots.children[i]
@@ -154,6 +163,7 @@ window.onload = async function() {
           })
         }
       }
+    //定義了一個 debounce 函式，它用來節流某個函式的執行，以避免在短時間內多次觸發
     function debounce(func,timeout=100){
         let timer;
         return(...args)=>{
