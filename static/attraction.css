@@ -89,6 +89,260 @@ a{
     margin: 0 auto;
     
 }
+
+
+.overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+    background: var(--Black, #000); 
+    z-index: 999; /* 疊放順序，要比彈跳視窗的z-index高 */
+}
+.signin{
+    display: flex;
+    background-color: #FFFFFF;
+    flex-direction: column;
+    max-width: 340px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 60px 0px #AAA;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: fixed;/*固定定位*/
+    display: none;
+    z-index: 1000;/*較高的疊放層次*/
+}
+.signin_bar{
+    background: var(--additional-color-dark-cyan-gradient-0-deg, linear-gradient(270deg, #378 0%, #6AB 100%));
+    border-radius: 6px 6px 0 0;
+    height: 10px;
+}
+.signin_header{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 0 10px 0 10px;   
+}
+
+.signin_account{
+    width: 190px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 27px;
+    color: #666666;
+    padding-bottom: 15px;
+    padding: 15px 15px 15px 15px;
+    align-items: center;
+
+}
+.signin_img{
+    border: 0;
+    outline: 0;
+    background:#FFFFFF;
+    cursor: pointer;
+}
+.signin_email{
+    width: 280px;
+    padding: 15px;
+    margin: 0 15px 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--Gray-500, #CCC);
+    background: var(--White, #FFF);
+}
+.signin_email::placeholder {
+    color: #757575;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    outline: none;
+    border: 0;
+}
+
+.signin_password{
+    width: 280px;
+    padding: 15px;
+    margin: 0 15px 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--Gray-500, #CCC);
+    background: var(--White, #FFF);
+}
+.signin_password::placeholder {
+    color: #757575;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    left: 0;
+}
+.signin_botton{
+    width: 310px;
+    line-height: 27px;
+    font-size: 19px;
+    font-weight: 400;
+    padding: 10px 20px 10px 20px;
+    margin: 0 15px 10px 15px;
+    border-radius: 5px;
+    color:#FFFFFF;
+    background: #448899;
+    border: 1px solid var(--primary-color-cyan-70, #489);
+    border: none;
+    cursor: pointer;
+}
+.signin_message{
+    color: red;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    margin: 0 15px 10px 15px;
+}
+
+.signin_to_signup{
+    color: #757575;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    margin: 0 15px 10px 15px;
+}
+#signInToSignUP{
+    cursor: pointer;
+}
+#signInToSignUP:hover{
+    font-weight: 700;
+}
+#signUpToSignin{
+    cursor: pointer;
+}
+#signUpToSignin:hover{
+    font-weight: 700;
+}
+
+.signup{
+    display: flex;
+    background-color: #FFFFFF;
+    flex-direction: column;
+    max-width: 340px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 60px 0px #AAA;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: fixed;/*固定定位*/
+   display: none;
+    z-index: 1000;/*較高的疊放層次*/
+}
+.signup_bar{
+    background: var(--additional-color-dark-cyan-gradient-0-deg, linear-gradient(270deg, #378 0%, #6AB 100%));
+    border-radius: 6px 6px 0 0;
+    height: 10px;
+}
+.signup_header{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 0 10px 0 10px;   
+}
+
+.signup_account{
+    width: 190px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 27px;
+    color: #666666;
+    padding-bottom: 15px;
+    padding: 15px 15px 15px 15px;
+    align-items: center;
+
+}
+.signup_img{
+    border: 0;
+    outline: 0;
+    background:#FFFFFF;
+    cursor: pointer;
+}
+.signup_name{
+    width: 280px;
+    padding: 15px;
+    margin: 0 15px 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--Gray-500, #CCC);
+    background: var(--White, #FFF);
+}
+.signup_name::placeholder {
+    color: #757575;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    outline: none;
+    border: 0;
+}
+.signup_email{
+    width: 280px;
+    padding: 15px;
+    margin: 0 15px 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--Gray-500, #CCC);
+    background: var(--White, #FFF);
+}
+.signup_email::placeholder {
+    color: #757575;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    outline: none;
+    border: 0;
+}
+
+.signup_password{
+    width: 280px;
+    padding: 15px;
+    margin: 0 15px 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--Gray-500, #CCC);
+    background: var(--White, #FFF);
+}
+.signup_password::placeholder {
+    color: #757575;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    left: 0;
+}
+.signup_botton{
+    width: 310px;
+    line-height: 27px;
+    font-size: 19px;
+    font-weight: 400;
+    padding: 10px 20px 10px 20px;
+    margin: 0 15px 10px 15px;
+    border-radius: 5px;
+    color:#FFFFFF;
+    background: #448899;
+    border: 1px solid var(--primary-color-cyan-70, #489);
+    border: none;
+    cursor: pointer;
+}
+.signup_message{
+    color: red;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    margin: 0 15px 10px 15px;
+}
+.signup_to_signin{
+    color: #757575;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    margin: 0 15px 10px 15px;
+}
+
 .navigation{
     display: flex;
     justify-content: space-between;
@@ -110,8 +364,15 @@ a{
     padding: 10px;
     color: #666666;
     font-size: 16px;
-    font-weight: medium;
+    font-weight: 500;
     line-height: 13.3px; 
+    background: #FFFFFF;
+    border:0;
+    outline: 0;
+    cursor: pointer;
+}
+.navigation_menu_item:hover{
+    font-weight: 700;
 }
 .separator_logo{
     border-top: 1px solid #E8E8E8;
@@ -123,6 +384,12 @@ a{
     margin: 0 auto;
     padding: 0 15px 0 15px;
     padding-bottom: 37px;
+}
+.attraction_message{
+    color: #000;
+    font-size: 16px;
+    font-weight: 500; 
+    text-align: center;
 }
 .attraction_imgs{
     margin-right: 30px;

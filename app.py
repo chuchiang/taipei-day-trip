@@ -183,26 +183,32 @@ def mrts():
 @app.route("/api/user",methods=["POST"])
 def user():
     try:
-        signup_name = request.form["signUpName"]
-        signup_email = request.form["signUpEnail"]
-        signup_password = request.form["signUpPassword"]
+        data_all = request.get_json()  # 從請求中取得 JSON 資料
+        print(data_all)
+        signup_name = data_all["name"]
+        signup_email = data_all["email"]
+        signup_password = data_all["password"]
         query = "SELECT*FROM members WHERE email=%s"
         values = (signup_email,)
         email_task = execute_query(query, values)
+        print(email_task)
 
-        if email_task is None:
+        if len(email_task)<=0:
             query = "INSERT INTO members(name,email,password)VALUES(%s,%s,%s);"
             values = (signup_name, signup_email, signup_password)
-            execute_query(query, values)
+            a=execute_query(query, values)
+            print(a)
             response = {
                 "ok": "true",
             }
+            print(response)
             return jsonify(response), 200
         else:
             error_response = {
                 "error": "true",
                 "message": "email已經註冊過"
             }
+            print(error_response)
             return jsonify(error_response), 400
 
     except Exception as e:
@@ -219,13 +225,17 @@ def user():
 @app.route("/api/user/auth", methods=["PUT"])
 def signin():
     try:
-        signin_email = request.form["signInEmail"]
-        signin_password = request.form["signInPassword"]
-        query = "SELECT*FROM members WHERE email LIKE%s and password LIKE%s"
+        
+        data_all = request.get_json()  # 從請求中取得 JSON 資料
+        print(data_all)
+        signin_email = data_all["email"]
+        signin_password = data_all["password"]
+        query = "SELECT*FROM members WHERE email=%s and password=%s"
         values = (signin_email, signin_password)
         signin_task = execute_query(query, values)
+        print(signin_task)
         
-        if len(signin_task) != 0:
+        if len(signin_task)!= 0:
             signin_data = signin_task[0]
             payload = {
                 "id": signin_data[0],
@@ -248,7 +258,7 @@ def signin():
         print(e)
         error_response = {
             "error": "true",
-            "message": "伺服器內部錯誤2"
+            "message": "伺服器內部錯誤"
         }
         return jsonify(error_response), 500
 
@@ -267,10 +277,10 @@ def currect():
         }    
             # print(user_info)
         return jsonify({'data': user_info}), 200
-    except jwt.ExpiredSignatureError:
-        return jsonify({"error": "true", "message": "Token 過期"}), 401
-    except jwt.DecodeError:
-        return jsonify({"error": "true", "message": "Token 解碼失敗"}), 401
+    # except jwt.ExpiredSignatureError:
+    #     return jsonify({"error": "true", "message": "Token 過期"}), 401
+    # except jwt.DecodeError:
+    #     return jsonify({"error": "true", "message": "Token 解碼失敗"}), 401
     except Exception as e:
         print(e)
         return jsonify({"data": "null"})
