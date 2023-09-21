@@ -182,24 +182,7 @@ window.onload = async function() {
 
 
 
-document.addEventListener('DOMContentLoaded',function(){
-    let morningRadio = document.getElementById('morning_radio');
-    let afternoonRadio = document.getElementById('afternoon_radio');
-    let tripPrice = document.getElementById('trip_price');
-    let priceNotice = document.getElementById('price_notice');
-    morningRadio.addEventListener('click',function(){
-        priceNotice.style.display="none";
-        tripPrice.textContent="新台幣 2000 元"
-
-    });
-    afternoonRadio.addEventListener('click',function(){
-        priceNotice.style.display="none";
-        tripPrice.textContent="新台幣 2500 元"
-    });
-
-});
-
-
+//登入
 
 document.addEventListener('DOMContentLoaded', function() {
     let token = localStorage.getItem('jwtToken');
@@ -243,9 +226,10 @@ function signin(){
         let signUpBox=document.querySelector('#signUpBox');
         let signUpClose=document.querySelector('#signup_close');
         let signUpToSignin=document.querySelector('#signUpToSignin');
+
         signInBox.style.display = 'block';
         overlay.style.display = 'block';
-    
+
         signInClose.addEventListener('click',function(){
             signInBox.style.display = 'none';
             overlay.style.display = 'none';
@@ -275,10 +259,14 @@ function signin(){
             let signInEmail = document.getElementById('signInEmail').value;
             let signinPassword = document.getElementById('signinPassword').value;
             let signInMessage = document.getElementById('signInMessage');
+            emailRule = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     
             if (signInEmail===""||signinPassword===""){
                 event.preventDefault(); // 阻止表單提交
-                alert("請輸入完整資訊");
+                alert("請輸入完整登入資訊");
+                return;
+            }else if(!emailRule.test(signInEmail)){
+                alert("email格式輸入錯誤");
                 return;
             }
             
@@ -303,7 +291,7 @@ function signin(){
                     console.log("登入成功");
                     location.reload();
                 } else {
-                    signInMessage.textContent="帳號或密碼錯誤"
+                    signInMessage.textContent="email或密碼錯誤"
                     console.log("登入失敗");
                 }
             })
@@ -320,10 +308,14 @@ function signin(){
             let signUpEmail = document.getElementById('signUpEmail').value;
             let signUpPassword = document.getElementById('signUpPassword').value;
             let signUpMessage = document.getElementById('signUpMessage');
+            emailRule = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     
             if (signUpName===""||signUpEmail===""||signUpPassword===""){
                 event.preventDefault(); // 阻止表單提交
-                alert("請輸入完整資訊");
+                alert("請輸入完整註冊資訊");
+                return;
+            }else if(!emailRule.test(signUpEmail)){
+                alert("email格式輸入錯誤");
                 return;
             }
             
@@ -370,4 +362,3 @@ function logout() {
     // 重新載入相同頁面
     location.reload();
 }
-

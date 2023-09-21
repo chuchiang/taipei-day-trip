@@ -493,8 +493,7 @@ function signin(){
                 event.preventDefault(); // 阻止表單提交
                 alert("請輸入完整登入資訊");
                 return;
-            }
-            if(!emailRule.test(signInEmail)){
+            }else if(!emailRule.test(signInEmail)){
                 alert("email格式輸入錯誤");
                 return;
             }
@@ -543,8 +542,7 @@ function signin(){
                 event.preventDefault(); // 阻止表單提交
                 alert("請輸入完整註冊資訊");
                 return;
-            }
-            if(!emailRule.test(signInEmail)){
+            }else if(!emailRule.test(signUpEmail)){
                 alert("email格式輸入錯誤");
                 return;
             }
