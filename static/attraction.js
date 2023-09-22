@@ -183,7 +183,6 @@ window.onload = async function() {
 
 
 //登入
-
 document.addEventListener('DOMContentLoaded', function() {
     let token = localStorage.getItem('jwtToken');
        
@@ -233,6 +232,11 @@ function signin(){
         signInClose.addEventListener('click',function(){
             signInBox.style.display = 'none';
             overlay.style.display = 'none';
+            // 清空登入輸入框的值
+            document.getElementById('signInMessage').textContent=""
+            document.getElementById('signInEmail').value = '';
+            document.getElementById('signinPassword').value = '';
+
         })
         manuSignInBtn.addEventListener('click',function(){
             signInBox.style.display = 'block';
@@ -241,14 +245,29 @@ function signin(){
         signInToSignUP.addEventListener('click',function(){
             signUpBox.style.display='block'
             signInBox.style.display = 'none';
+            // 清空登入輸入框的值
+            document.getElementById('signInMessage').textContent=""
+            document.getElementById('signInEmail').value = '';
+            document.getElementById('signinPassword').value = '';
         })
         signUpClose.addEventListener('click',function(){
             signUpBox.style.display='none';
             overlay.style.display = 'none';
+            // 清空登入輸入框的值
+            document.getElementById('signUpMessage').textContent="";
+            document.getElementById('signUpName').value = '';
+            document.getElementById('signUpEmail').value = '';
+            document.getElementById('signUpPassword').value = '';
+
         })
         signUpToSignin.addEventListener("click",function(){
             signUpBox.style.display='none';
             signInBox.style.display='block';
+            // 清空登入輸入框的值
+            document.getElementById('signUpMessage').textContent="";
+            document.getElementById('signUpName').value = '';
+            document.getElementById('signUpEmail').value = '';
+            document.getElementById('signUpPassword').value = '';
         })
     
         //登入資料提交給後端
@@ -261,15 +280,17 @@ function signin(){
             let signInMessage = document.getElementById('signInMessage');
             emailRule = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     
+         
             if (signInEmail===""||signinPassword===""){
                 event.preventDefault(); // 阻止表單提交
-                alert("請輸入完整登入資訊");
+                signInMessage.textContent="請輸入完整登入資訊";
                 return;
             }else if(!emailRule.test(signInEmail)){
-                alert("email格式輸入錯誤");
+                event.preventDefault(); // 阻止表單提交
+                signInMessage.textContent="email格式輸入錯誤";
                 return;
             }
-            
+    
             // 將用戶輸入的值轉為 JSON 格式
             let signInData = {
                 email: signInEmail,
@@ -312,10 +333,11 @@ function signin(){
     
             if (signUpName===""||signUpEmail===""||signUpPassword===""){
                 event.preventDefault(); // 阻止表單提交
-                alert("請輸入完整註冊資訊");
+                signUpMessage.textContent="請輸入完整註冊資訊";
                 return;
             }else if(!emailRule.test(signUpEmail)){
-                alert("email格式輸入錯誤");
+                event.preventDefault(); // 阻止表單提交
+                signUpMessage.textContent="email格式輸入錯誤";
                 return;
             }
             

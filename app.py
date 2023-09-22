@@ -184,31 +184,27 @@ def mrts():
 def user():
     try:
         data_all = request.get_json()  # 從請求中取得 JSON 資料
-        print(data_all)
         signup_name = data_all["name"]
         signup_email = data_all["email"]
         signup_password = data_all["password"]
         query = "SELECT*FROM members WHERE email=%s"
         values = (signup_email,)
         email_task = execute_query(query, values)
-        print(email_task)
+       
 
         if len(email_task)<=0:
             query = "INSERT INTO members(name,email,password)VALUES(%s,%s,%s);"
             values = (signup_name, signup_email, signup_password)
             a=execute_query(query, values)
-            print(a)
             response = {
                 "ok": "true",
             }
-            print(response)
             return jsonify(response), 200
         else:
             error_response = {
                 "error": "true",
                 "message": "email已經註冊過"
             }
-            print(error_response)
             return jsonify(error_response), 400
 
     except Exception as e:
@@ -227,13 +223,13 @@ def signin():
     try:
         
         data_all = request.get_json()  # 從請求中取得 JSON 資料
-        print(data_all)
+        
         signin_email = data_all["email"]
         signin_password = data_all["password"]
         query = "SELECT*FROM members WHERE email=%s and password=%s"
         values = (signin_email, signin_password)
         signin_task = execute_query(query, values)
-        print(signin_task)
+        
         
         if len(signin_task)!= 0:
             signin_data = signin_task[0]
@@ -266,7 +262,7 @@ def signin():
 @app.route("/api/user/auth", methods=["GET"])
 def currect():
     try:
-        print(request)
+        
         token = request.headers.get('Authorization').split(' ')[1]
         payload = jwt.decode(token, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
         
