@@ -12,14 +12,40 @@
 
 <body>
     <div class="wrap">
+        <div class="overlay" id="overlay"></div>
+        <div class="signin" id="signinBox">
+            <div class="signin_bar"></div>
+            <div class="signin_header">
+                <div class="signin_account">登入會員帳號</div>
+                <button class="signin_img" id="signin_close"><img src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+            </div>
+            <input class="signin_email" name="signin_email" placeholder="輸入電子信箱" id="signInEmail">
+            <input class="signin_password" name="signin_password" placeholder="輸入密碼" id="signinPassword" type="password">
+            <button class="signin_botton" id="signInBtn">登入帳戶</button>
+            <div class="signin_message" id="signInMessage"></div>
+            <div class="signin_to_signup">還沒有帳戶？<span id="signInToSignUP">點此註冊</span></div>
+        </div>
+        <div class="signup" id="signUpBox">
+            <div class="signup_bar"></div>
+            <div class="signup_header">
+                <div class="signup_account">註冊會員帳號</div>
+                <button class="signup_img" id="signup_close"><img src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+            </div>
+            <input class="signup_name" name="signup_name" placeholder="輸入姓名" id="signUpName">
+            <input class="signup_email" name="signup_email" placeholder="輸入電子郵件" id="signUpEmail">
+            <input class="signup_password" name="signup_password" placeholder="輸入密碼" id="signUpPassword" type="password">
+            <button class="signup_botton" id="signUpBtn">註冊新帳戶</button>
+            <div class="signup_message" id="signUpMessage"></div>
+            <div class="signup_to_signin">已經有帳戶？<span id="signUpToSignin">點此登入</span></div>
+        </div>
         <div class="navigation">
             <div class="navigation_logo">
                 <h2>台北一日遊</h2>
             </div>
-            <ul class="navigation_menu">
-                <li class="navigation_menu_item">預定行程</li>
-                <li class="navigation_menu_item">登入/註冊</li>
-            </ul>
+            <div class="navigation_menu">
+                <button class="navigation_menu_item">預定行程</button>
+                <button class="navigation_menu_item" id="menu_signin_btn">登入/註冊</button>
+            </div>
         </div>
         <div class="hero">
             <img class="hero_img "src="{{ url_for('static', filename='welcome_1600.jpg') }}" alt="welcome">
