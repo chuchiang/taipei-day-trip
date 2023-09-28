@@ -384,7 +384,7 @@ function booking() {
     }
     let time = document.querySelector('input[name="time"]:checked').value;
 
-    fetch("http://127.0.0.1:3000/api/booking", {
+    fetch("/api/booking", {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
