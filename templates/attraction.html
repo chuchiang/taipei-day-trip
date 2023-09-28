@@ -41,7 +41,7 @@
                 <h2>台北一日遊</h2></a>
             </div>
             <div class="navigation_menu">
-                <button class="navigation_menu_item">預定行程</button>
+                <button class="navigation_menu_item" id="booking_btn">預定行程</button>
                 <button class="navigation_menu_item" id="menu_signin_btn">登入/註冊</button>
             </div>
         </div>
@@ -69,14 +69,17 @@
                 <div class="attraction_tour_booking">
                     <div class="attraction_tour_booking_trip b-16">訂購導覽行程</div>
                     <div class="attraction_tour_booking_trip m-16s">以此景點為中心的一日行程，帶您探索城市角落故事</div>
-                    <div class="attraction_tour_booking_trip m-16"><span class="b-16">選擇日期：</span><input type="date" class="attraction_tour_booking_trip_calendar"></div>
-                    <div class="attraction_tour_booking_trip m-16"><span class="b-16">選擇時間：</span><input  type="radio" class="attraction_tour_booking_trip_radiom" name="time" value="morning" id="morning_radio" >上半天<input  type="radio" class="attraction_tour_booking_trip_radioa" name="time" value="afternoon" id="afternoon_radio">下半天</div>
+                    <div class="attraction_tour_booking_trip m-16"><span class="b-16">選擇日期：</span><input id="date" type="date" class="attraction_tour_booking_trip_calendar" ></div>
+                    <div class="attraction_tour_booking_trip m-16">
+                        <span class="b-16">選擇時間：</span>
+                        <input  id="morning_radio" type="radio" class="attraction_tour_booking_trip_radiom" name="time" value="morning" >上半天
+                        <input id="afternoon_radio" type="radio" class="attraction_tour_booking_trip_radioa" name="time" value="afternoon" >下半天
+                    </div>
                     <div class="attraction_tour_booking_trip">
                         <span class="b-16">導覽費用：</span>
-                        <span class="attraction_tour_booking_trip_price m-16" id="price_notice">請先選擇時段</span>
-                        <span class="attraction_tour_booking_trip_price m-16" id="trip_price"></span>
+                        <input id="trip_price_input" class="attraction_tour_booking_trip_price m-16" placeholder="請先選擇時段" readonly>
                         </div>
-                    <button class="attraction_tour_booking_btn">開始預約行程</button>
+                    <button class="attraction_tour_booking_btn" id="star_booking_btn">開始預約行程</button>
                 </div>
             </div>
         </div>
@@ -100,5 +103,7 @@
         </div>
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename = 'attraction.js') }}"></script><!-- 連到js -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'signin.js') }}"></script><!-- 連到js -->
+    
 </body>
 </html>

@@ -180,7 +180,7 @@ def mrts():
 # 註冊
 
 
-@app.route("/api/user",methods=["POST"])
+@app.route("/api/user", methods=["POST"])
 def user():
     try:
         data_all = request.get_json()  # 從請求中取得 JSON 資料
@@ -190,12 +190,10 @@ def user():
         query = "SELECT*FROM members WHERE email=%s"
         values = (signup_email,)
         email_task = execute_query(query, values)
-       
-
-        if len(email_task)<=0:
+        if len(email_task) <= 0:
             query = "INSERT INTO members(name,email,password)VALUES(%s,%s,%s);"
             values = (signup_name, signup_email, signup_password)
-            a=execute_query(query, values)
+            execute_query(query, values)
             response = {
                 "ok": "true",
             }
@@ -217,21 +215,16 @@ def user():
 
 
 # 當前登入資訊
-
 @app.route("/api/user/auth", methods=["PUT"])
 def signin():
     try:
-        
         data_all = request.get_json()  # 從請求中取得 JSON 資料
-        
         signin_email = data_all["email"]
         signin_password = data_all["password"]
         query = "SELECT*FROM members WHERE email=%s and password=%s"
         values = (signin_email, signin_password)
         signin_task = execute_query(query, values)
-        
-        
-        if len(signin_task)!= 0:
+        if len(signin_task) != 0:
             signin_data = signin_task[0]
             payload = {
                 "id": signin_data[0],
@@ -262,16 +255,14 @@ def signin():
 @app.route("/api/user/auth", methods=["GET"])
 def currect():
     try:
-        
         token = request.headers.get('Authorization').split(' ')[1]
         payload = jwt.decode(token, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
-        
         user_info = {
             'id': payload['id'],
             'name': payload['name'],
             'email': payload['email']
-        }    
-            # print(user_info)
+        }
+        # print(user_info)
         return jsonify({'data': user_info}), 200
     # except jwt.ExpiredSignatureError:
     #     return jsonify({"error": "true", "message": "Token 過期"}), 401
@@ -280,6 +271,108 @@ def currect():
     except Exception as e:
         print(e)
         return jsonify({"data": "null"})
+
+
+def signin(token):
+    try:
+        # 驗證是否有登入
+        if token is None:
+            return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
+        
+        token_split = token.split(' ')[1]
+        payload = jwt.decode(token_split, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
+        
+        if payload is None:
+            return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
+        
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "true", "message": "Token 過期"}), 401    
+
+    except Exception as e:
+        print(e)
+        
+    
+
+
+
+@app.route("/api/booking", methods=["GET"])
+def booking_data():
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        signin(token)
+
+        if len(booking_data_global)!=0:
+            return jsonify(booking_data_global), 200
+        else:
+            data_all = {
+                "data": "null"
+            }
+            return jsonify(data_all), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
+booking_data_global=[]#宣告一個全域的空陣列放booking資料
+
+@app.route("/api/booking", methods=["POST"])
+def booking_build():
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        signin(token)
+        
+        data = request.get_json() # 從資料中獲取值
+        if data is not None:
+            attractionId=data["attractionId"]
+            date=data["date"]
+            time=data["time"]
+            price=data["price"]
+            global booking_data_global
+            query = "SELECT*FROM attractions WHERE id=%s;"
+            values = (attractionId,)
+            booking_attraction_data=execute_query(query, values)
+            booking_data_global = []# 移除之前的預定行程
+            for booking_attraction in booking_attraction_data:
+                image_list = booking_attraction[9].split(',')# 以逗號切割多張圖片的網址
+                datalist={
+                    "data":{
+                        "attraction":{
+                            "id":booking_attraction[0],
+                            "name": booking_attraction[1],
+                            "address": booking_attraction[4],
+                            "image": image_list[0],  # 取得第一張圖片的網址
+                        },
+                        "date":date,
+                        "time":time,
+                        "price":price
+                    }
+                }
+                booking_data_global.append(datalist)
+                
+            return jsonify({"ok": "true"}), 200
+        else:
+            return jsonify({"error": "true","message":"建立失敗，輸入不正確或其他原因"}),400
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+    
+@app.route("/api/booking",methods=["DELETE"])
+def booking_delete():
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        signin(token)
+        
+        global booking_data_global
+        
+        if len(booking_data_global)!=0:
+            booking_data_global = []
+            return jsonify({"ok": "true"}), 403
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
 
 
 # Pages

@@ -90,7 +90,6 @@ a{
     
 }
 
-
 .overlay{
     display: none;
     position: fixed;
@@ -370,6 +369,7 @@ a{
     border:0;
     outline: 0;
     cursor: pointer;
+    font-family: Noto Sans TC;
 }
 .navigation_menu_item:hover{
     font-weight: 700;
@@ -536,7 +536,25 @@ li.dot--active {
     border-color: #ffff;
 }
 .attraction_tour_booking_trip_price{
-    margin-left: 10px;
+    margin-left: 5px;
+    color: var(--secondary-color-gray-70, #666);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px; 
+    border: none;
+    appearance:none;
+    -moz-appearance:none;
+    background: #E8E8E8;
+    font-family: 'Noto Sans TC';
+}
+.attraction_tour_booking_trip_price:focus{
+    outline:none;
+}
+.attraction_tour_booking_trip_price ::placeholder{
+    color: var(--secondary-color-gray-70, #666);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px; 
 }
 .attraction_tour_booking_btn{
     margin-top: 14px;
@@ -548,6 +566,7 @@ li.dot--active {
     font-size: 19px;
     font-weight: 400;
     line-height: 16px;
+    cursor: pointer;
 }
 .separator_img{
     border-top: 1px solid #E8E8E8;
@@ -598,11 +617,11 @@ li.dot--active {
 }
 .footer_p{
     color: #FFFFFF;
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
-    line-height: 13.3px;
+    line-height: 14px;
+    font-size: 16px;
 }
-
 @media (max-width:1200px){
     .wrap{
         width: 100%;
