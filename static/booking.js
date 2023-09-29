@@ -70,6 +70,10 @@ fetch("/api/booking", {
                 bookingAddress.classList.add('booking_content_address', 'm-16');
                 bookingAddress.innerHTML = '<span class="b-16">地點：</span>' + list.data.attraction.address;
 
+                let bookingRrice = document.createElement("div");
+                bookingRrice.classList.add('total_price', 'b-16');
+                bookingRrice.innerHTML = "總價：" + list.data.price ;
+
                 // 將最終創建的元素添加到文檔中
                 let bookingImg = document.getElementById('booking_img');
                 bookingImg.appendChild(image);
@@ -80,8 +84,10 @@ fetch("/api/booking", {
                 bookingContent.appendChild(bookingTime);
                 bookingContent.appendChild(bookingPrice);
                 bookingContent.appendChild(bookingAddress);
-
                 message.innerHTML = "";
+
+                let total = document.getElementById('total');
+                total.prepend(bookingRrice);
 
             })
         } else {

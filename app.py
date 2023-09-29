@@ -179,7 +179,6 @@ def mrts():
 
 # 註冊
 
-
 @app.route("/api/user", methods=["POST"])
 def user():
     try:
@@ -291,10 +290,6 @@ def signin(token):
     except Exception as e:
         print(e)
         
-    
-
-
-
 @app.route("/api/booking", methods=["GET"])
 def booking_data():
     try:
@@ -373,6 +368,7 @@ def booking_delete():
     except Exception as e:
         print(e)
         return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
 
 
 # Pages
