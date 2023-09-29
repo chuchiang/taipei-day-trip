@@ -79,7 +79,10 @@ a{
     line-height: 14px; 
 }
 .wrap{
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
+    min-height: 100vh;
 }
 .overlay{
     display: none;
@@ -526,12 +529,12 @@ padding-bottom: 15px;
 .message{
     width: 1000px;
     margin: 0 auto;
-    
 }
 .footer{
     margin-top: 63px;
     background-color: #757575;
     padding: 40px 0 40px 0;
+    flex-grow: 1; /* 內容佔滿剩餘高度 */
 }
 .footer_p{
     color: #FFFFFF;
@@ -546,18 +549,19 @@ padding-bottom: 15px;
     .wrap,.navigation,.separator_logo{
         max-width: 100%;
     }
-    .headline,.booking,.separator,.contact,.payment,.total{
+    .message,.headline,.booking,.separator,.contact,.payment,.total{
         max-width: 95%;
     }
     .footer{
         max-width: 100%;
     }
+
 }
 @media (max-width: 600px){
     .wrap,.navigation,.separator_logo{
         max-width: 100%;
     }
-    .headline,.booking,.separator,.contact,.payment,.total{
+    .message,.headline,.booking,.separator,.contact,.payment,.total{
         max-width: 95%;
     }
     .footer{
