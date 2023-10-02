@@ -12,15 +12,36 @@
 
 <body>
     <div class="wrap">
+        <div id="loadingScreen">
+            <div class="loadingio-spinner-spinner-o5dixidgmqa">
+                <div class="ldio-qil3bdsdgd">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
+        </div>
         <div class="overlay" id="overlay"></div>
         <div class="signin" id="signinBox">
             <div class="signin_bar"></div>
             <div class="signin_header">
                 <div class="signin_account">登入會員帳號</div>
-                <button class="signin_img" id="signin_close"><img src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+                <button class="signin_img" id="signin_close"><img
+                        src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
             </div>
             <input class="signin_email" name="signin_email" placeholder="輸入電子信箱" id="signInEmail">
-            <input class="signin_password" name="signin_password" placeholder="輸入密碼" id="signinPassword" type="password">
+            <input class="signin_password" name="signin_password" placeholder="輸入密碼" id="signinPassword"
+                type="password">
             <button class="signin_botton" id="signInBtn">登入帳戶</button>
             <div class="signin_message" id="signInMessage"></div>
             <div class="signin_to_signup">還沒有帳戶？<span id="signInToSignUP">點此註冊</span></div>
@@ -29,11 +50,13 @@
             <div class="signup_bar"></div>
             <div class="signup_header">
                 <div class="signup_account">註冊會員帳號</div>
-                <button class="signup_img" id="signup_close"><img src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+                <button class="signup_img" id="signup_close"><img
+                        src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
             </div>
             <input class="signup_name" name="signup_name" placeholder="輸入姓名" id="signUpName">
             <input class="signup_email" name="signup_email" placeholder="輸入電子郵件" id="signUpEmail">
-            <input class="signup_password" name="signup_password" placeholder="輸入密碼" id="signUpPassword" type="password">
+            <input class="signup_password" name="signup_password" placeholder="輸入密碼" id="signUpPassword"
+                type="password">
             <button class="signup_botton" id="signUpBtn">註冊新帳戶</button>
             <div class="signup_message" id="signUpMessage"></div>
             <div class="signup_to_signin">已經有帳戶？<span id="signUpToSignin">點此登入</span></div>
@@ -48,32 +71,34 @@
             </div>
         </div>
         <div class="hero">
-            <img class="hero_img "src="{{ url_for('static', filename='welcome_1600.jpg') }}" alt="welcome">
+            <img class="hero_img " src="{{ url_for('static', filename='welcome_1600.jpg') }}" alt="welcome">
             <div class="hero_box">
-            <div class="hero_slogan">
-                <h1>輕鬆享受台北一日悠閒</h1>
-                <p>探索每個角落，體驗城市的深度旅遊行程</p>
-                <div class="hero_slogan_input">
-                    <input class="hero_slogan_input_con" name="search" placeholder="輸入景點名稱查詢" id="keyword">
-                    <button onclick="clean()"><img src="{{ url_for('static', filename='icon/search.png') }}" alt="search button"></button>
+                <div class="hero_slogan">
+                    <h1>輕鬆享受台北一日悠閒</h1>
+                    <p>探索每個角落，體驗城市的深度旅遊行程</p>
+                    <div class="hero_slogan_input">
+                        <input class="hero_slogan_input_con" name="search" placeholder="輸入景點名稱查詢" id="keyword">
+                        <button onclick="clean()"><img src="{{ url_for('static', filename='icon/search.png') }}"
+                                alt="search button"></button>
+                    </div>
                 </div>
             </div>
-            </div>
         </div>
-        </div>
-        <div class="content">
-            <div class="content_listbar">
-                <button class="content_listbar_left"><img src="{{ url_for('static', filename='icon/arrow_left.png') }}" alt="arrow left"
-                        id="arrow_left"></button>
-                <div class="content_listbar_box">
-                    <ul class="content_listbar_mrt" id="mrt_list">
-                            <!-- <li class="content_listbar_mrt_name">123</li> -->
-                    </ul>
-                </div>
-                <button class="content_listbar_right"><img src="{{ url_for('static', filename='icon/arrow_right.png') }}" alt=" arrow
-                        right"id="arrow_right"></button>
+    </div>
+    <div class="content">
+        <div class="content_listbar">
+            <button class="content_listbar_left"><img src="{{ url_for('static', filename='icon/arrow_left.png') }}"
+                    alt="arrow left" id="arrow_left"></button>
+            <div class="content_listbar_box">
+                <ul class="content_listbar_mrt" id="mrt_list">
+                    <!-- <li class="content_listbar_mrt_name">123</li> -->
+                </ul>
             </div>
-            <div class="content_list" id="content_list">
+            <button class="content_listbar_right"><img src="{{ url_for('static', filename='icon/arrow_right.png') }}"
+                    alt=" arrow
+                        right" id="arrow_right"></button>
+        </div>
+        <div class="content_list" id="content_list">
             <!--<div class="content_list_att">
                     <div class="content_list_att_img">
                         <img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="picture">
@@ -84,13 +109,13 @@
                         <li class="content_list_att_con_catrgory">123</li>
                     </ul>
                 </div> -->
-            </div>
         </div>
-        <div class="footer" id="judge_footer">
-            <span class="footer_p">
-                <p>COPYRIGHT © 2021 台北一日遊</p>
-            </span>
-        </div>
+    </div>
+    <div class="footer" id="judge_footer">
+        <span class="footer_p">
+            <p>COPYRIGHT © 2021 台北一日遊</p>
+        </span>
+    </div>
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script><!-- 連到js -->
     <script type="text/javascript" src="{{ url_for('static', filename = 'signin.js') }}"></script><!-- 連到js -->

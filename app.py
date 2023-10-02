@@ -179,6 +179,7 @@ def mrts():
 
 # 註冊
 
+
 @app.route("/api/user", methods=["POST"])
 def user():
     try:
@@ -255,7 +256,8 @@ def signin():
 def currect():
     try:
         token = request.headers.get('Authorization').split(' ')[1]
-        payload = jwt.decode(token, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
+        payload = jwt.decode(token, 'taipei123', algorithms=[
+                             'HS256'])  # 透過 JWT 機制進行解碼和驗證
         user_info = {
             'id': payload['id'],
             'name': payload['name'],
@@ -272,33 +274,171 @@ def currect():
         return jsonify({"data": "null"})
 
 
+# def signin(token):
+#     try:
+#         # 驗證是否有登入
+#         if token is None:
+#             return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
+
+#         token_split = token.split(' ')[1]
+#         payload = jwt.decode(token_split, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
+
+#         if payload is None:
+#             return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
+
+#     except jwt.ExpiredSignatureError:
+#         return jsonify({"error": "true", "message": "Token 過期"}), 401
+
+#     except Exception as e:
+#         print(e)
+
+# @app.route("/api/booking", methods=["GET"])
+# def booking_data():
+#     try:
+#         # 驗證是否有登入
+#         token = request.headers.get('Authorization')
+#         signin(token)
+
+#         if len(booking_data_global)!=0:
+#             return jsonify(booking_data_global), 200
+#         else:
+#             data_all = {
+#                 "data": "null"
+#             }
+#             return jsonify(data_all), 200
+#     except Exception as e:
+#         print(e)
+#         return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
+# booking_data_global=[]#宣告一個全域的空陣列放booking資料
+
+# @app.route("/api/booking", methods=["POST"])
+# def booking_build():
+#     try:
+#         # 驗證是否有登入
+#         token = request.headers.get('Authorization')
+#         signin(token)
+
+#         data = request.get_json() # 從資料中獲取值
+#         if data is not None:
+#             attractionId=data["attractionId"]
+#             date=data["date"]
+#             time=data["time"]
+#             price=data["price"]
+#             global booking_data_global
+#             query = "SELECT*FROM attractions WHERE id=%s;"
+#             values = (attractionId,)
+#             booking_attraction_data=execute_query(query, values)
+#             booking_data_global = []# 移除之前的預定行程
+#             for booking_attraction in booking_attraction_data:
+#                 image_list = booking_attraction[9].split(',')# 以逗號切割多張圖片的網址
+#                 datalist={
+#                     "data":{
+#                         "attraction":{
+#                             "id":booking_attraction[0],
+#                             "name": booking_attraction[1],
+#                             "address": booking_attraction[4],
+#                             "image": image_list[0],  # 取得第一張圖片的網址
+#                         },
+#                         "date":date,
+#                         "time":time,
+#                         "price":price
+#                     }
+#                 }
+#                 booking_data_global.append(datalist)
+
+#             return jsonify({"ok": "true"}), 200
+#         else:
+#             return jsonify({"error": "true","message":"建立失敗，輸入不正確或其他原因"}),400
+#     except Exception as e:
+#         print(e)
+#         return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
+# @app.route("/api/booking",methods=["DELETE"])
+# def booking_delete():
+#     try:
+#         # 驗證是否有登入
+#         token = request.headers.get('Authorization')
+#         signin(token)
+
+#         global booking_data_global
+
+#         if len(booking_data_global)!=0:
+#             booking_data_global = []
+#             return jsonify({"ok": "true"}), 403
+
+#     except Exception as e:
+#         print(e)
+#         return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
+
+# try
+
 def signin(token):
     try:
         # 驗證是否有登入
         if token is None:
             return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
-        
+
         token_split = token.split(' ')[1]
-        payload = jwt.decode(token_split, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
-        
+        payload = jwt.decode(token_split, 'taipei123', algorithms=[
+                             'HS256'])  # 透過 JWT 機制進行解碼和驗證
+
         if payload is None:
             return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
-        
+        else:
+            member_id = payload['id']
+            return member_id
+
     except jwt.ExpiredSignatureError:
-        return jsonify({"error": "true", "message": "Token 過期"}), 401    
+        return jsonify({"error": "true", "message": "Token 過期"}), 401
 
     except Exception as e:
         print(e)
-        
+
+
 @app.route("/api/booking", methods=["GET"])
 def booking_data():
     try:
         # 驗證是否有登入
         token = request.headers.get('Authorization')
-        signin(token)
+        member_id = signin(token)
 
-        if len(booking_data_global)!=0:
-            return jsonify(booking_data_global), 200
+        if member_id is not None:
+
+            query = "SELECT booking.member_id,\
+                booking.attraction_id,\
+                attractions.name,\
+                attractions.address,\
+                attractions.images,\
+                booking.date,\
+                booking.time,\
+                booking.price,\
+                booking.id\
+                FROM attractions INNER JOIN booking ON attractions.id = booking.attraction_id WHERE booking.member_id=%s;"
+            values = (member_id,)
+            data_list = execute_query(query, values)
+
+        booking_data = []
+
+        if len(data_list) != 0:
+            for data in data_list:
+                datalist = {
+                    "data": {
+                        "attraction": {
+                            "id": data[1],
+                            "name": data[2],
+                            "address": data[3],
+                            "image": data[4].split(',')[0],  # 取得第一張圖片的網址
+                        },
+                        "date": data[5],
+                        "time": data[6],
+                        "price": data[7],
+                        "booking_id": data[8]
+                    }
+                }
+                booking_data.append(datalist)
+            return Response(json.dumps(booking_data, sort_keys=False), mimetype='application/json')
         else:
             data_all = {
                 "data": "null"
@@ -308,68 +448,52 @@ def booking_data():
         print(e)
         return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
 
-booking_data_global=[]#宣告一個全域的空陣列放booking資料
 
 @app.route("/api/booking", methods=["POST"])
 def booking_build():
     try:
         # 驗證是否有登入
         token = request.headers.get('Authorization')
-        signin(token)
-        
-        data = request.get_json() # 從資料中獲取值
+        member_id = signin(token)
+
+        data = request.get_json()  # 從資料中獲取值
         if data is not None:
-            attractionId=data["attractionId"]
-            date=data["date"]
-            time=data["time"]
-            price=data["price"]
-            global booking_data_global
-            query = "SELECT*FROM attractions WHERE id=%s;"
-            values = (attractionId,)
-            booking_attraction_data=execute_query(query, values)
-            booking_data_global = []# 移除之前的預定行程
-            for booking_attraction in booking_attraction_data:
-                image_list = booking_attraction[9].split(',')# 以逗號切割多張圖片的網址
-                datalist={
-                    "data":{
-                        "attraction":{
-                            "id":booking_attraction[0],
-                            "name": booking_attraction[1],
-                            "address": booking_attraction[4],
-                            "image": image_list[0],  # 取得第一張圖片的網址
-                        },
-                        "date":date,
-                        "time":time,
-                        "price":price
-                    }
-                }
-                booking_data_global.append(datalist)
-                
+            attractionId = int(data["attractionId"])
+
+            date = data["date"]
+            time = data["time"]
+            price = data["price"]
+            booking_query = "INSERT INTO booking(member_id,attraction_id,date,time,price)VALUES(%s,%s,%s,%s,%s);"
+            booking_values = (member_id, attractionId, date, time, price)
+            execute_query(booking_query, booking_values)
+
             return jsonify({"ok": "true"}), 200
         else:
-            return jsonify({"error": "true","message":"建立失敗，輸入不正確或其他原因"}),400
+            return jsonify({"error": "true", "message": "建立失敗，輸入不正確或其他原因"}), 400
     except Exception as e:
         print(e)
         return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
-    
-@app.route("/api/booking",methods=["DELETE"])
+
+
+@app.route("/api/booking", methods=["DELETE"])
 def booking_delete():
     try:
         # 驗證是否有登入
         token = request.headers.get('Authorization')
         signin(token)
-        
-        global booking_data_global
-        
-        if len(booking_data_global)!=0:
-            booking_data_global = []
+
+        data = request.data.decode("utf-8")  # 解碼接收的純文本數據
+
+        if data is not None:
+            query = "DELETE FROM booking WHERE id=%s"
+            values = (data,)
+            execute_query(query, values)
+
             return jsonify({"ok": "true"}), 403
 
     except Exception as e:
         print(e)
         return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
-
-
 
 # Pages
 @app.route("/")

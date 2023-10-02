@@ -6,28 +6,50 @@ let match = currentURL.match(/\/attraction\/(\d+)/);
 let id = match[1];
 
 
-let fetchUrl = async()=>{
-// 如果成功匹配，match[1] 就是取得的id值
-    if (id<=58) {
+let fetchUrl = async () => {
+    // 如果成功匹配，match[1] 就是取得的id值
+    if (id <= 58) {
         await fetch(`/api/attraction/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            let dataLength = data.data.length;
+            .then(response => response.json())
+            .then(data => {
+                let dataLength = data.data.length;
                 if (dataLength > 0) {
-                    data.data.forEach(attraction =>{
-            
+                    data.data.forEach(attraction => {
+
                         // 創建包含圖片和名稱的<ul>元素
                         let attractionImgsContent = document.createElement('ul');
                         attractionImgsContent.classList.add('attraction_imgs_content');
                         attractionImgsContent.id = "slider";
 
+                        // 創建包loading screen
+                        var loadingScreenDiv = document.createElement("div");
+                        loadingScreenDiv.id = "loadingScreen";
+
+                        var spinnerDiv = document.createElement("div");
+                        spinnerDiv.className = "loadingio-spinner-spinner-o5dixidgmqa";
+
+                        var ldioDiv = document.createElement("div");
+                        ldioDiv.className = "ldio-qil3bdsdgd";
+
+                        // 創建 12 divs
+                        for (var i = 0; i < 12; i++) {
+                            var div = document.createElement("div");
+                            ldioDiv.appendChild(div);
+                        }
+
+                        spinnerDiv.appendChild(ldioDiv);
+                        loadingScreenDiv.appendChild(spinnerDiv);
+
+                        // Append the loading screen div to the ul
+                        attractionImgsContent.appendChild(loadingScreenDiv);
+
                         // 創建dot <ul>元素
                         let attractionImgsDots = document.createElement('ul');
                         attractionImgsDots.classList.add('attraction_imgs_btns');
-                        attractionImgsDots.id = "dots";                    
+                        attractionImgsDots.id = "dots";
 
-                        attraction.images.forEach((datImages) =>{
-                    
+                        attraction.images.forEach((datImages) => {
+
                             let attractionImgsContentUnactive = document.createElement('li');
                             attractionImgsContentUnactive.classList.add('attraction_imgs_content_unactive');
                             // 創建圖片<img>元素
@@ -42,15 +64,22 @@ let fetchUrl = async()=>{
 
                         })
 
+                        // 加載完圖片隐藏 loadingScreen
+                        let attractionImages = new Image();
+                        attractionImages.src = attraction.images[0];  //假设第一张图片是要加载的图片
+                        attractionImages.onload = function () {
+                            loadingScreenDiv.style.display = "none";
+                        };
+
                         //name
                         let attractionTourName = document.createElement('div');
                         attractionTourName.classList.add('attraction_tour_name');
                         attractionTourName.textContent = attraction.name;
-                
+
                         //category
                         let attractionTourCategory = document.createElement('div');
                         attractionTourCategory.classList.add('attraction_tour_category');
-                        attractionTourCategory.textContent = attraction.category+" at "+attraction.mrt;
+                        attractionTourCategory.textContent = attraction.category + " at " + attraction.mrt;
 
                         //description
                         let contentDescription = document.createElement('div');
@@ -65,14 +94,14 @@ let fetchUrl = async()=>{
                         //transport
                         let contentTransportsContent = document.createElement('div');
                         contentTransportsContent.classList.add('content_transports_content');
-                        contentTransportsContent.textContent = "捷運站名："+attraction.transport;
+                        contentTransportsContent.textContent = "捷運站名：" + attraction.transport;
 
                         // 將最終創建的元素添加到文檔中
                         let attractionContent = document.getElementById('attraction_imgs'); // 替換成你想要添加的父容器的ID
                         let attractionTour = document.getElementById('tour');
                         attractionContent.prepend(attractionImgsContent);
-                        attractionTour.prepend(attractionTourCategory);  
-                        attractionTour.prepend(attractionTourName);   
+                        attractionTour.prepend(attractionTourCategory);
+                        attractionTour.prepend(attractionTourName);
                         let content = document.getElementById('content');
                         content.prepend(contentDescription);
                         let contentAddress = document.getElementById('contentAddress');
@@ -84,24 +113,24 @@ let fetchUrl = async()=>{
                     });
 
                 }
-            
-        });
+
+            });
 
     }
-    else{
+    else {
         let attractionMessage = document.getElementById('attraction_message');
         let separatorImg = document.getElementById('separator_img');
         let content = document.getElementById('content');
-        attraction.innerHTML="";
-        content.style.display='none';
-        separatorImg.style.display='none';
-        attractionMessage.textContent="沒有此景點";
-        content.innerHTML="";
+        attraction.innerHTML = "";
+        content.style.display = 'none';
+        separatorImg.style.display = 'none';
+        attractionMessage.textContent = "沒有此景點";
+        content.innerHTML = "";
     }
 }
 
 
-window.onload = async function() {
+window.onload = async function () {
     await fetchUrl();//await 等待fetchUrl執行完後才執行
     let rightBtn = document.getElementById('rightbtn');
     let leftBtn = document.getElementById('leftbtn');
@@ -114,37 +143,37 @@ window.onload = async function() {
     rightBtn.addEventListener("click", () => (slideProxy.index += 1));//rightBtn點擊後slideProxy.index 值+1
     leftBtn.addEventListener("click", () => (slideProxy.index -= 1));//leftBtn點擊後slideProxy.index 值-+1
     setClickEventToDots();
-    window.oversize=debounce(calculateWidth);//將 calculateWidth 函式包裝在 debounce 函式中，賦值給全局變數 oversize
+    window.oversize = debounce(calculateWidth);//將 calculateWidth 函式包裝在 debounce 函式中，賦值給全局變數 oversize
     let slideProps = { index: 0 };//slideProps 屬性 index，其初始值為 0。
     let slideHanlder = {//slideHandler 的物件，這個物件將用作後面代理（Proxy）的處理器，用來控制對 slideProps 物件的操作
-        set (obj,prop,value){//set 方法 這個方法會在對 slideProps 物件的屬性進行設置（修改）時被調用。它接受三個參數：obj：被代理的目標物件，即 slideProps。prop：被設置的屬性名稱，這裡是 "index"。value：要設置的新值。
-            if (prop == "index"){
+        set(obj, prop, value) {//set 方法 這個方法會在對 slideProps 物件的屬性進行設置（修改）時被調用。它接受三個參數：obj：被代理的目標物件，即 slideProps。prop：被設置的屬性名稱，這裡是 "index"。value：要設置的新值。
+            if (prop == "index") {
                 if (value >= imgCounts) {
                     value = value % imgCounts; //value 的範圍在 0 都在第一頁
                 }
-                if (value < 0){ //value 的範圍是負數都停在第一張
+                if (value < 0) { //value 的範圍是負數都停在第一張
                     return;
                 }
-                
+
                 setDotToInactive();
-                obj[prop]=value;//slideProps 物件中的 "index" 屬性設置為新的值 value，這一行實際上修改了 slideProxy.index
+                obj[prop] = value;//slideProps 物件中的 "index" 屬性設置為新的值 value，這一行實際上修改了 slideProxy.index
                 calculateWidth();
                 setActiveDot();
             }
         },
     };
-    let slideProxy = new Proxy(slideProps,slideHanlder);//創建了一個 Proxy 物件 slideProxy，它會監聽 slideProps 物件的變化
+    let slideProxy = new Proxy(slideProps, slideHanlder);//創建了一個 Proxy 物件 slideProxy，它會監聽 slideProps 物件的變化
     setActiveDot();
     //calculateWidth 函式，用來計算輪播容器的寬度，並將 slider 容器捲動到相應位置，以顯示當前圖片。
-    function calculateWidth(){
+    function calculateWidth() {
         let imgWith = slider.offsetWidth;
-        let recomputeWidth = slideProps.index*imgWith;
+        let recomputeWidth = slideProps.index * imgWith;
         slider.scrollLeft = recomputeWidth;
     }
-    
+
     //setDotToInactive 函式，將當前活動的指示點設置為非活動狀態
-    function setDotToInactive(){
-        let{index}=slideProps
+    function setDotToInactive() {
+        let { index } = slideProps
         children[index].classList.remove('dot--active')
     }
     //setActiveDot 函式，將當前圖片對應的指示點設置為活動狀態
@@ -155,34 +184,34 @@ window.onload = async function() {
     //為所有指示點添加點擊事件的監聽器。當某個指示點被點擊時，會觸發箭頭函式，將相應的圖片顯示出來
     function setClickEventToDots() {
         for (let i = 0; i < dots.children.length; i++) {
-          const li = dots.children[i]
-          li.addEventListener('click', () => {
-            slideProxy.index = i
-          })
+            const li = dots.children[i]
+            li.addEventListener('click', () => {
+                slideProxy.index = i
+            })
         }
-      }
+    }
     //定義了一個 debounce 函式，它用來節流某個函式的執行，以避免在短時間內多次觸發
-    function debounce(func,timeout=100){
+    function debounce(func, timeout = 100) {
         let timer;
-        return(...args)=>{
+        return (...args) => {
             clearTimeout(timer);
             timer = setTimeout(() => {
                 func.apply(this, args);
             }, timeout);
         }
-    }     
+    }
 }
-document.addEventListener('DOMContentLoaded',function(){
+document.addEventListener('DOMContentLoaded', function () {
     let morningRadio = document.getElementById('morning_radio');
     let afternoonRadio = document.getElementById('afternoon_radio');
     let tripPriceValue = document.getElementById('trip_price_input');
-    
-    morningRadio.addEventListener('click',function(){
-        tripPriceValue.value="新台幣 2000 元";
+
+    morningRadio.addEventListener('click', function () {
+        tripPriceValue.value = "新台幣 2000 元";
 
     });
-    afternoonRadio.addEventListener('click',function(){
-        tripPriceValue.value="新台幣 2500 元";
+    afternoonRadio.addEventListener('click', function () {
+        tripPriceValue.value = "新台幣 2500 元";
     });
 
 });
@@ -200,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                
+
                 if (data.data === "null") {
                     signin();
                 } else {
@@ -373,12 +402,13 @@ function booking() {
     let token = localStorage.getItem('jwtToken');
     let date = document.getElementById('date').value;
     let timeValue = document.querySelector('input[name="time"]:checked')
-    let price = document.getElementById('trip_price_input').value;
+    let priceStr = document.getElementById('trip_price_input').value;
+    let price = priceStr.replace(/[^0-9]/ig, "");//正則只取數字
     let currentURL = window.location.href;//取得目前瀏覽器網址
     let match = currentURL.match(/\/attraction\/(\d+)/);// 利用正則表達式取得網址中的id部分
     let id = match[1];
 
-    if(date.trim() === ""||timeValue==="null"||price===""){
+    if (date.trim() === "" || timeValue === "null" || price === "") {
         alert("請輸入完整預定資訊");
         return;
     }
@@ -390,7 +420,7 @@ function booking() {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json' // body 的內容需要被轉成 JSON 字串
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
             "attractionId": id,
             "date": date,
             "time": time,
@@ -399,7 +429,7 @@ function booking() {
     })
         .then(response => response.json())
         .then(data => {
-            
+
             if (data.ok) {
                 window.location.href = '/booking';
                 console.log("ok")

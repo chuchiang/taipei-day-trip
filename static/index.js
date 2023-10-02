@@ -1,3 +1,7 @@
+window.addEventListener("load", function () {
+    let loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.style.display = "none";
+});
 
 //listbar 生成
 document.addEventListener("DOMContentLoaded", function () {
@@ -49,31 +53,31 @@ function updateSlider() {
 
 // 載入每頁的景點
 let nextPage = 0; // 初始頁數
-let keywordNextPage= 0;
+let keywordNextPage = 0;
 let isLoading = false; // 是否正在載入中
 
 
 // 創建IntersectionObserver實例
 let intersectionObserver = new IntersectionObserver(entries => {
     // 如果正在載入中或者已經沒有下一頁，則不執行載入
-    
+
     if (isLoading || (nextPage === null || keywordNextPage === null)) {
         return;
     }
     // 檢查每個觀察目標的進入狀態
     entries.forEach(entry => {
-        
+
         if (entry.isIntersecting) {
 
             let keyword = document.getElementById('keyword').value;
 
             // 載入下一頁的資料
-            if (keyword === ""){
+            if (keyword === "") {
                 loadNextPage();
-            }else{
+            } else {
                 searchAttractions();
             }
-            
+
         }
     });
 }, { threshold: 0.5 }); // 定義觸發閾值
@@ -89,7 +93,7 @@ function loadNextPage() {
         return;
     }
     isLoading = true;
-    
+
     fetch(`/api/attractions?page=${nextPage}`)
         .then(response => response.json())
         .then(data => {
@@ -160,18 +164,18 @@ function loadNextPage() {
         });
 }
 
-let lastKeyword="";
+let lastKeyword = "";
 
 //請求keywordksearchAttractions
 async function searchAttractions() {
     let attractionList = document.getElementById('content_list');
     let keyword = document.getElementById('keyword').value;
-    
+
     // 設置為正在載入中，防止重複載入
     if (isLoading) {
         return;
     }
-    isLoading = true;   
+    isLoading = true;
 
     // 使用fetch()向API發送請求
     try {
@@ -181,14 +185,14 @@ async function searchAttractions() {
             attractionList.innerHTML = '';
             lastKeyword = keyword; // 更新最后一次使用的关键词
         }
-        
+
         let response = await fetch(`/api/attractions?page=${keywordNextPage}&keyword=${keyword}`);
-        
+
         let dataList = await response.json();
         let data = dataList.data;
         // 清空景點列表
-        
-        
+
+
         if (data !== undefined && data.length > 0) {
             // 顯示搜尋結果
             data.forEach(attraction => {
@@ -243,20 +247,20 @@ async function searchAttractions() {
                 attractionListContainer.appendChild(attractionItem);
             });
             keywordNextPage = dataList.nextPage;
-            
-            
+
+
         } else {
             // 顯示沒有結果
             attractionList.textContent = '沒有搜尋到任何景點';
             keywordNextPage = null;
-            
+
         }
     } catch (error) {
         console.error('搜尋景點時出錯：', error);
-    }finally{
-         isLoading = false;
-       
-     }
+    } finally {
+        isLoading = false;
+
+    }
 }
 
 //mrt 點選後尋關鍵字
@@ -267,16 +271,16 @@ mrtList.addEventListener('click', (event) => {
         let mrtName = event.target.getAttribute('data_mrt');
         keywordInput.value = mrtName; // 填入捷運站名稱到搜尋框
         let attractionList = document.getElementById('content_list');
-        keywordNextPage= 0;
+        keywordNextPage = 0;
         attractionList.innerHTML = '';
         searchAttractions(); // 呼叫搜尋景點函數
-        
+
     }
 });
 
-function clean(){
+function clean() {
     let attractionList = document.getElementById('content_list');
-    keywordNextPage= 0;
+    keywordNextPage = 0;
     attractionList.innerHTML = '';
     searchAttractions(); // 呼叫搜尋景點函數
 
