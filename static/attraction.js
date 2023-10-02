@@ -1,3 +1,9 @@
+window.addEventListener("load", function () {
+    let loadingScreenA = document.getElementById("loadingScreenA");
+    loadingScreenA.style.display = "none";
+});
+
+
 //取得目前瀏覽器網址
 let currentURL = window.location.href;
 
