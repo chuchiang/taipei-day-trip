@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thankyou</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='thankyou.css') }}"> <!--連到css-->
+</head>
+
+<body>
+
+    <div class="wrap">
+        <div id="loadingScreen">
+            <div class="loadingio-spinner-spinner-o5dixidgmqa">
+                <div class="ldio-qil3bdsdgd">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" id="overlay"></div>
+        <div class="signin" id="signinBox">
+            <div class="signin_bar"></div>
+            <div class="signin_header">
+                <div class="signin_account">登入會員帳號</div>
+                <button class="signin_img" id="signin_close"><img
+                        src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+            </div>
+            <input class="signin_email" name="signin_email" placeholder="輸入電子信箱" id="signInEmail">
+            <input class="signin_password" name="signin_password" placeholder="輸入密碼" id="signinPassword"
+                type="password">
+            <button class="signin_botton" id="signInBtn">登入帳戶</button>
+            <div class="signin_message" id="signInMessage"></div>
+            <div class="signin_to_signup">還沒有帳戶？<span id="signInToSignUP">點此註冊</span></div>
+        </div>
+        <div class="signup" id="signUpBox">
+            <div class="signup_bar"></div>
+            <div class="signup_header">
+                <div class="signup_account">註冊會員帳號</div>
+                <button class="signup_img" id="signup_close"><img
+                        src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+            </div>
+            <input class="signup_name" name="signup_name" placeholder="輸入姓名" id="signUpName">
+            <input class="signup_email" name="signup_email" placeholder="輸入電子郵件" id="signUpEmail">
+            <input class="signup_password" name="signup_password" placeholder="輸入密碼" id="signUpPassword"
+                type="password">
+            <button class="signup_botton" id="signUpBtn">註冊新帳戶</button>
+            <div class="signup_message" id="signUpMessage"></div>
+            <div class="signup_to_signin">已經有帳戶？<span id="signUpToSignin">點此登入</span></div>
+        </div>
+        <div class="navigation">
+            <div class="navigation_logo"><a href="/">
+                    <h2>台北一日遊</h2>
+                </a>
+            </div>
+            <div class="navigation_menu">
+                <button class="navigation_menu_item" id="booking_btn">預定行程</button>
+                <button class="navigation_menu_item" id="menu_signin_btn">登入/註冊</button>
+            </div>
+        </div>
+        <div class="separator_logo"></div>
+        <div class="contact">
+            <div class="contact_message m-16" id="contact_message"></div>
+            <div class="block" id="block">
+                <div class="contact_img"><img src="{{ url_for('static', filename='icon/reservation.png') }}"
+                        alt="reservation"></div>
+                <div class=" b-22">訂單已付款完成</div>
+                <div class="contact_number" id="contact_number">
+                    <!-- <div class="contact_number_order">訂單編號.....</div> -->
+                    
+                </div>
+                <div class="contact_number_attraction b-16">已預定的行程：</div>
+                <!-- <div class="contact_order">
+                    <div class="contact_order_img">
+                        <img src="https://fastly.picsum.photos/id/731/250/200.jpg?hmac=7XEvzirW_g3nQ166NnzXIksjfX_1o0LNmHJ9Flx6cMA"
+                            alt="">
+                    </div>
+                    <div class="contact_order_content">
+
+                        <div class="contact_order_content_name">台北一日遊：平安鐘</div>
+                        <div class="contact_order_content_date m-16">
+                            <span class="b-16">日期：
+                            </span>2021-04-23
+                        </div>
+                        <div class="contact_order_content_time m-16">
+                            <span class="b-16">時間：
+                            </span>早上 9 點到下午 4 點
+                        </div>
+                        <div class="contact_order_content_price m-16">
+                            <span class="b-16">費用：
+                            </span>新台幣 2000 元
+                        </div>
+                        <div class="contact_order_content_address m-16">
+                            <span class="b-16">地點：
+                            </span>臺北市 大安區忠孝東路4段
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>    
+        <div class="footer" id="judge_footer">
+            <span class="footer_p">
+            <p>COPYRIGHT © 2021 台北一日遊2</p>
+        </span>
+        
+
+
+        <script type="text/javascript" src="{{ url_for('static', filename = 'signin.js') }}"></script><!-- 連到js -->
+        <script type="text/javascript" src="{{ url_for('static', filename = 'thankyou.js') }}"></script>
+        <!-- 連到js -->
+</body>
+
+</html>

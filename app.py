@@ -1,8 +1,11 @@
+from datetime import datetime
+import random
 import jwt
 import time
 from mysql.connector import pooling
 import json
 from flask import *
+import requests
 from flask import Flask
 app = Flask(__name__, static_folder='static')
 app.config["JSON_AS_ASCII"] = False
@@ -180,7 +183,7 @@ def mrts():
 # 註冊
 
 
-@app.route("/api/user",methods=["POST"])
+@app.route("/api/user", methods=["POST"])
 def user():
     try:
         data_all = request.get_json()  # 從請求中取得 JSON 資料
@@ -190,12 +193,10 @@ def user():
         query = "SELECT*FROM members WHERE email=%s"
         values = (signup_email,)
         email_task = execute_query(query, values)
-       
-
-        if len(email_task)<=0:
+        if len(email_task) <= 0:
             query = "INSERT INTO members(name,email,password)VALUES(%s,%s,%s);"
             values = (signup_name, signup_email, signup_password)
-            a=execute_query(query, values)
+            execute_query(query, values)
             response = {
                 "ok": "true",
             }
@@ -217,21 +218,16 @@ def user():
 
 
 # 當前登入資訊
-
 @app.route("/api/user/auth", methods=["PUT"])
 def signin():
     try:
-        
         data_all = request.get_json()  # 從請求中取得 JSON 資料
-        
         signin_email = data_all["email"]
         signin_password = data_all["password"]
         query = "SELECT*FROM members WHERE email=%s and password=%s"
         values = (signin_email, signin_password)
         signin_task = execute_query(query, values)
-        
-        
-        if len(signin_task)!= 0:
+        if len(signin_task) != 0:
             signin_data = signin_task[0]
             payload = {
                 "id": signin_data[0],
@@ -262,16 +258,15 @@ def signin():
 @app.route("/api/user/auth", methods=["GET"])
 def currect():
     try:
-        
         token = request.headers.get('Authorization').split(' ')[1]
-        payload = jwt.decode(token, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
-        
+        payload = jwt.decode(token, 'taipei123', algorithms=[
+                             'HS256'])  # 透過 JWT 機制進行解碼和驗證
         user_info = {
             'id': payload['id'],
             'name': payload['name'],
             'email': payload['email']
-        }    
-            # print(user_info)
+        }
+        # print(user_info)
         return jsonify({'data': user_info}), 200
     # except jwt.ExpiredSignatureError:
     #     return jsonify({"error": "true", "message": "Token 過期"}), 401
@@ -281,6 +276,311 @@ def currect():
         print(e)
         return jsonify({"data": "null"})
 
+
+def signin(token):
+    try:
+        # 驗證是否有登入
+        if token is None:
+            return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
+
+        token_split = token.split(' ')[1]
+        payload = jwt.decode(token_split, 'taipei123', algorithms=['HS256'])  # 透過 JWT 機制進行解碼和驗證
+
+        if payload is None:
+            return jsonify({"error": "true", "message": "未登入系統，拒絕存取"}), 403
+        else:
+            member_id = payload['id']
+            return member_id
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "true", "message": "Token 過期"}), 401
+
+    except Exception as e:
+        print(e)
+
+
+@app.route("/api/booking", methods=["GET"])
+def booking_data():
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        member_id = signin(token)
+
+        if member_id is not None:
+
+            query = "SELECT booking.member_id,\
+                booking.attraction_id,\
+                attractions.name,\
+                attractions.address,\
+                attractions.images,\
+                booking.date,\
+                booking.time,\
+                booking.price,\
+                booking.id\
+                FROM attractions INNER JOIN booking ON attractions.id = booking.attraction_id WHERE booking.member_id=%s;"
+            values = (member_id,)
+            data_list = execute_query(query, values)
+
+        booking_data = []
+
+        if len(data_list) != 0:
+            for data in data_list:
+                datalist = {
+                    "data": {
+                        "attraction": {
+                            "id": data[1],
+                            "name": data[2],
+                            "address": data[3],
+                            "image": data[4].split(',')[0],  # 取得第一張圖片的網址
+                        },
+                        "date": data[5],
+                        "time": data[6],
+                        "price": data[7],
+                        "booking_id": data[8]
+                    }
+                }
+                booking_data.append(datalist)
+            return Response(json.dumps(booking_data, sort_keys=False), mimetype='application/json')
+        else:
+            data_all = {
+                "data": "null"
+            }
+            return jsonify(data_all), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
+
+@app.route("/api/booking", methods=["POST"])
+def booking_build():
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        member_id = signin(token)
+
+        data = request.get_json()  # 從資料中獲取值
+        if data is not None:
+            attractionId = int(data["attractionId"])
+
+            date = data["date"]
+            time = data["time"]
+            price = data["price"]
+            booking_query = "INSERT INTO booking(member_id,attraction_id,date,time,price)VALUES(%s,%s,%s,%s,%s);"
+            booking_values = (member_id, attractionId, date, time, price)
+            execute_query(booking_query, booking_values)
+
+            return jsonify({"ok": "true"}), 200
+        else:
+            return jsonify({"error": "true", "message": "建立失敗，輸入不正確或其他原因"}), 400
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
+
+@app.route("/api/booking", methods=["DELETE"])
+def booking_delete():
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        member_id = signin(token)
+
+        data = request.data.decode("utf-8")  # 解碼接收的純文本數據
+
+        if data is not None:
+            query = "DELETE FROM booking WHERE id=%s and member_id=%s"
+            values = (data,member_id)
+            execute_query(query, values)
+
+            return jsonify({"ok": "true"}), 403
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "true", "message": "伺服器內部錯誤"}), 500
+
+
+def generate_order_number():
+    # 得到當前日期
+    current_date = datetime.now().strftime("%Y%m%d")
+
+    # 生成6位隨機數
+    random_number = str(random.randint(100000, 999999))
+
+    # 日期和隨機數结合為訂單
+    order_number = f"{current_date}{random_number}"
+
+    return order_number
+
+
+@app.route("/api/orders", methods=["POST"])
+def order():
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        member_id = signin(token)
+        data = request.get_json()  # 從資料中獲取值
+
+        if data is not None:
+            order_number = generate_order_number()
+            payment_status = "未付款"
+            total_price = 0
+            for order_data in data:
+                attraction_id = order_data['data']['order']['trip']['attraction']['id']
+                date = order_data['data']['order']['trip']['date']
+                time = order_data['data']['order']['trip']['time']
+                price = int(order_data['data']['order']['price'])
+                total_price += price
+                contact_name = order_data['data']['order']['contact']['name']
+                contact_phone = order_data['data']['order']['contact']['phone']
+                contact_email = order_data['data']['order']['contact']['email']
+                order_query = "INSERT INTO orders(member_id,order_number,payment_status,attraction_id,date,time,price,contact_name,contact_phone,contact_email)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+                order_values = (member_id, order_number, payment_status, attraction_id,
+                                date, time, price, contact_name, contact_phone, contact_email)
+                execute_query(order_query, order_values)
+
+            prime = data[0]['data']['prime']
+            name = data[0]['data']['order']['contact']['name']
+            phone = data[0]['data']['order']['contact']['phone']
+            email = data[0]['data']['order']['contact']['email']
+            headers = {'Content-Type': 'application/json',
+                       'x-api-key': 'partner_lQ2SZgPFSitR87j6zmsIJnibPPT4nK2CTREDbVRI9A5AZ8k6K07HgDVW'}
+            address = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+
+            json_str = {
+                "prime": prime,
+                "partner_key": "partner_lQ2SZgPFSitR87j6zmsIJnibPPT4nK2CTREDbVRI9A5AZ8k6K07HgDVW",
+                "merchant_id": "luluching_CTBC",
+                "details": "Taipei Trip Test",
+                "amount": total_price,
+                "cardholder": {
+                    "phone_number": phone,
+                    "name": name,
+                    "email": email,
+                    "zip_code": "",
+                    "address": "",
+                    "national_id": ""
+                },
+                "remember": False
+            }
+
+            result = requests.post(address, headers=headers, json=json_str)
+            event = result.text
+
+            event_dict = json.loads(event)  # JSON 字符串轉為 Python 字典
+
+            if event_dict["msg"] == "Success":
+                event_data = {
+                    "data": {
+                        "number": order_number,
+                        "payment": {
+                            "status": total_price,
+                            "message": "付款成功"
+                        }
+                    }
+                }
+                cart_query = "DELETE FROM booking WHERE member_id=%s"
+                cart_values = (member_id,)
+                execute_query(cart_query, cart_values)
+                event_query = "UPDATE orders SET payment_status=%s  WHERE order_number=%s;"
+                event_values = ("付款成功", order_number)
+                execute_query(event_query, event_values)
+            else:
+                event_data = {
+                    "data": {
+                        "number": order_number,
+                        "payment": {
+                            "status": total_price,
+                            "message": "付款失敗"
+                        }
+                    }
+                }
+                event_query = "UPDATE orders SET payment_status=%s  WHERE order_number=%s;"
+                event_values = ("付款失敗", order_number)
+                execute_query(event_query, event_values)
+            print(event_data)
+            return Response(json.dumps(event_data, sort_keys=False), mimetype='application/json')
+
+        else:
+            error_response = {
+                "error": "true",
+                "message": "訂單建立失敗"
+            }
+        return jsonify(error_response), 500
+
+    except Exception as e:
+        print(e)
+        error_response = {
+            "error": "true",
+            "message": "伺服器內部錯誤"
+        }
+    return jsonify(error_response), 500
+
+
+
+@app.route("/api/orders/<oderNumber>", methods=["GET"])
+def ordernumber(oderNumber):
+    try:
+        # 驗證是否有登入
+        token = request.headers.get('Authorization')
+        signin(token)
+        ordernumber_query='SELECT orders.order_number,\
+                orders.price,\
+                orders.attraction_id,\
+                attractions.name,\
+                attractions.address,\
+                attractions.images,\
+                orders.date,\
+                orders.time,\
+                orders.contact_name,\
+                orders.contact_phone,\
+                orders.contact_email\
+                FROM attractions INNER JOIN orders ON attractions.id = orders.attraction_id WHERE orders.order_number=%s AND orders.payment_status="付款成功";'
+        ordernumber_values=(oderNumber,)
+        ordernumber_list = execute_query(ordernumber_query, ordernumber_values)
+
+        if ordernumber_list is not None:
+            orderdata_list=[]
+            statustotal = 0
+            for orderdata in ordernumber_list:
+                status=1
+                statustotal +=status
+                attractionId={
+                    "data": {
+                        "number": orderdata[0],
+                        "price": orderdata[1],
+                        "trip": {
+                        "attraction": {
+                            "id": orderdata[2],
+                            "name": orderdata[3],
+                            "address": orderdata[4],
+                            "image": orderdata[5].split(',')[0],
+                        },
+                        "date": orderdata[6],
+                        "time": orderdata[7]
+                        },
+                        "contact": {
+                        "name": orderdata[8],
+                        "email": orderdata[9],
+                        "phone": orderdata[10]
+                        },
+                        "status": statustotal
+                    }
+                }
+                orderdata_list.append(attractionId)
+            
+        else:
+            attractionNull={
+                "data": "null"
+            }
+            orderdata_list.append(attractionNull)
+        return Response(json.dumps(orderdata_list, sort_keys=False), mimetype='application/json')
+    
+    except Exception as e:
+        print(e)
+        error_response = {
+            "error": "true",
+            "message": "伺服器內部錯誤"
+        }
+    return jsonify(error_response), 500
 
 # Pages
 @app.route("/")
