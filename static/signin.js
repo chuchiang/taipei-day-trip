@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('驗證出錯：', error.message);
         });
 
-
 });
 
 document.addEventListener('DOMContentLoaded', function () {
