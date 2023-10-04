@@ -1,3 +1,4 @@
+
 let token = localStorage.getItem('jwtToken');
 let bookingBtn = document.getElementById("booking_btn");
 
@@ -17,7 +18,11 @@ fetch("/api/user/auth", {
             headlineContent.textContent = "您好，" + data.data.name + "，待預訂的行程如下：";
 
             let headline = document.getElementById('headline');
-            headline.appendChild(headlineContent)
+            headline.appendChild(headlineContent);
+
+            document.getElementById('contactName').setAttribute('value',data.data.name)//資料自動帶入
+            document.getElementById('contactEmail').setAttribute('value',data.data.email)//資料自動帶入
+
 
         } else {
             window.location.href = '/';
@@ -87,6 +92,7 @@ let fetchUrl = async()=>{
                     let bookingDelete = document.createElement('button');
                     bookingDelete.classList.add('booking_delete');
                     bookingDelete.id = list.data.booking_id;
+                    bookingDelete.dataset.attraction = list.data.attraction.id; //dataset 提供了一个元素自定義，data- 開頭
                     
 
                     let deleteImage = document.createElement('img');
@@ -142,7 +148,7 @@ window.onload = async function() {
         
         let button = deleteBtn[i];
         let deleteId = button.getAttribute("id");
-
+        
         button.addEventListener("click", function () {
             fetch('/api/booking', {
                 method: 'DELETE',
@@ -155,6 +161,7 @@ window.onload = async function() {
                 .then(data => {
                     if (data.ok) {
                         location.reload();
+                        
                         let block = document.getElementById('block');
                         let message = document.getElementById('message');
                         block.innerHTML = "";
@@ -172,6 +179,7 @@ window.onload = async function() {
         });
 
     }
+    document.getElementById("loadingScreen").style.display = "none";//網頁最後都會跑這個function，所以可以把loadind畫面加這
 
 };
 

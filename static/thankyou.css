@@ -60,11 +60,19 @@ a{
     text-decoration: none;
     color: inherit; 
 }
-.b-19{
-    color: var(--secondary-color-gray-70, #666);
-    font-size: 19px;
+.b-22{
+    color: var(--secondary-color-gray-70, #448899);
+    font-size: 22px;
     font-weight: 700;
-    line-height: 16px; 
+    line-height: 22px; 
+}
+
+.b-18{
+    color: var(--secondary-color-gray-70, #448899);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 18px;
+    color: #0F4C81; 
 }
 .b-16{
     color: var(--secondary-color-gray-70, #666);
@@ -72,13 +80,13 @@ a{
     font-weight: 700;
     line-height: 14px; 
 }
+
 .m-16{
     color: var(--secondary-color-gray-70, #666);
     font-size: 16px;
     font-weight: 500;
     line-height: 14px; 
 }
-/* loadingwindow */
 /* loading */
 @keyframes ldio-qil3bdsdgd {
     0% { opacity: 1 }
@@ -175,7 +183,6 @@ a{
       z-index: 9999;
       display: flex;
   }
-
 .wrap{
     display: flex;
     flex-direction: column;
@@ -479,7 +486,37 @@ a{
 .headline_content{
     padding-bottom: 35px;
 }
-.booking{
+
+
+.contact{
+    width: 980px;
+    margin: 0 auto;
+    padding: 44px 0 45px 0;
+
+}
+.block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contact_img{
+    margin-bottom: 10px;
+}
+
+.contact_number{
+    padding-top: 20px;
+}
+.contact_number_order{
+    padding-bottom: 40px;
+}
+.contact_number_attraction{
+    width: 980px;
+    left: 0;
+    padding-bottom: 20px;
+}
+
+
+.contact_order{
     width: 980px;
     margin: 0 auto;
     display: flex;
@@ -488,19 +525,21 @@ a{
     border-radius: 5px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
-.booking_img{
+
+
+.contact_order_img{
     width: 250px;
     height: 200px;
     margin-right: 30px;
 }
-.booking_img img{
+.contact_order_img img{
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 5px 0 0 5px;
 }
 
-.booking_content_name{
+.contact_order_content_name{
     color: var(--primary-color-cyan-70, #489);
     font-size: 16px;
     font-weight: bold;
@@ -508,16 +547,16 @@ a{
     padding-bottom: 20px;
     padding-top: 10px;
 }
-.booking_content_date{
+.contact_order_content_date{
     padding-bottom: 20px;
 }
-.booking_content_time{
+.contact_order_content_time{
     padding-bottom: 20px;
 }
-.booking_content_price{
+.contact_order_content_price{
     padding-bottom: 20px;
 }
-.booking_delete {
+.contact_order_delete {
     border: 0;
     outline: 0;
     background:#FFFFFF;
@@ -528,116 +567,11 @@ a{
     width: 30px;
     height: 30px;
 }
-.booking_delete img{
-    right: 0;
-    top: 0;
-    position: absolute;
-}
-
-.separator{
-    border-top: 1px solid #E8E8E8;
-    width: 1200px;
-    margin: 0 auto;
-}
-.contact{
-    width: 980px;
-    margin: 0 auto;
-    padding: 44px 0 45px 0;
-}
-.contact_title{
-    padding-bottom: 24px;
-}
-.contact_name{
-    padding-bottom: 15px;
-}
-.contact_input{
-    width: 180px;
-    color: var(--additional-color-black, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 13.3px; 
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--Gray-300, #E8E8E8);
-    background: var(--White, #FFF); 
-    outline: none;
-}
-.contact_input::placeholder{
-    color: var(--additional-color-black, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 13.3px; 
-}
-.contact_email{
-padding-bottom: 15px;
-}
-.contact_phone{
-    padding-bottom: 20px;
-}
-.payment{
-    width: 980px;
-    margin: 0 auto;
-    padding: 44px 0 40px 0;
-}
-.payment_title{
-    padding-bottom: 24px;
-}
-.payment_critcard{
-    padding-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-.tpfield{
-    width: 180px;
-    height: 18px;
-    color: var(--additional-color-black, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 13.3px; 
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--Gray-300, #E8E8E8);
-    background: var(--White, #FFF); 
-    
-}
-
-.payment_exp{
-    padding-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-.payment_password{
-    display: flex;
-    align-items: center;
-}
 
 
-.total{
-    width: 980px;
-    margin: 0 auto;
-    padding-top: 43px;
-    text-align: right;
-}
-.total_price{
-    padding-bottom: 25px;
-}
-.total_btn{
-    right: 0;
-    color: var(--additional-color-white, #FFF);
-    text-align: center;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 16px; 
-    background: var(--primary-color-cyan-70, #489);
-    border:0;
-    border-radius: 5px;
-    padding: 10px 20px 10px 20px;
-    cursor: pointer;
-}
-.message{
-    width: 1000px;
-    margin: 0 auto;
-}
+
+
+
 .footer{
     margin-top: 63px;
     background-color: #757575;
@@ -653,11 +587,16 @@ padding-bottom: 15px;
 }
 
 
+
+
+
+
+
 @media (max-width: 1200px){
-    .wrap,.navigation,.separator_logo{
+    .wrap,.navigation,.separator_logo,.contact{
         max-width: 100%;
     }
-    .message,.headline,.booking,.separator,.contact,.payment,.total{
+    .contact_number_attraction,.contact_order{
         max-width: 95%;
     }
     .footer{
@@ -666,54 +605,45 @@ padding-bottom: 15px;
 
 }
 @media (max-width: 600px){
-    .wrap,.navigation,.separator_logo{
+    .wrap,.navigation,.separator_logo,.contact{
         max-width: 100%;
     }
-    .message,.headline,.booking,.separator,.contact,.payment,.total{
+    .contact_number_attraction,.contact_order{
         max-width: 95%;
     }
-    .footer{
-        max-width: 100%;
-    }
-    .booking{
+    .contact_order{
         flex-wrap: wrap;
         position: relative;
         margin-bottom: 20px;
         padding-bottom: 20px;
     }
-    .booking_img img{
+    .contact_order_content{
+        padding-left: 10px;
+    }
+    .contact_order_img{
         width: 100%;
+        border-radius: 5px 5px 0 0;/*左上 右上 右下 左下*/
+        height: 200px;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .contact_order_content_name{
+        padding-top: 20px;
+    }
+    .contact_order_img img{
+        max-width: 100%;
+        max-height: 100%;
         border-radius: 5px 5px 0 0;/*左上 右上 右下 左下*/
        
     }
-    .booking_content_name{
+    .contact_order_content_name{
         padding-top: 0;
     }
-    .booking_content{
-        margin-top: 35px;
-    }
-    .booking_delete{
-        top: auto; /*移除 top 屬性 */
-        bottom: 0px;
-        position: absolute;
-    }
-    .booking_delete img {
-        top: auto;  /*移除 top 屬性 */
-        bottom: 0px;
-        position: absolute;
-    }
-    .booking_img{
-        width: 100%;
-        height: 200px;
-        margin-right: 0;
-    }
-    .booking_img img{
+
+
+    .footer{
         max-width: 100%;
-        max-height: 100%;
     }
 
-    .contact_notice{
-        line-height: 23px;
-    }
 
 }

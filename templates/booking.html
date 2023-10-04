@@ -11,6 +11,25 @@
 
 <body>
     <div class="wrap">
+        <div id="loadingScreen">
+            <div class="loadingio-spinner-spinner-o5dixidgmqa">
+                <div class="ldio-qil3bdsdgd">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
+        </div>
         <div class="overlay" id="overlay"></div>
         <div class="signin" id="signinBox">
             <div class="signin_bar"></div>
@@ -43,7 +62,8 @@
         </div>
         <div class="navigation">
             <div class="navigation_logo"><a href="/">
-                <h2>台北一日遊</h2></a>
+                    <h2>台北一日遊</h2>
+                </a>
             </div>
             <div class="navigation_menu">
                 <button class="navigation_menu_item" id="booking_btn">預定行程</button>
@@ -56,11 +76,11 @@
         </div>
         <div class="block" id="block">
 
-            <!-- <div class="booking" id ="boooking">
-                <div class="booking_img" id="booking_img">
+            <!-- <div class="booking">
+                <div class="booking_img">
                     <img src="https://fastly.picsum.photos/id/731/250/200.jpg?hmac=7XEvzirW_g3nQ166NnzXIksjfX_1o0LNmHJ9Flx6cMA" alt="">
                 </div>
-                <div class="booking_content" id="booking_content">
+                <div class="booking_content">
                     <div class="booking_content_name">台北一日遊：平安鐘</div>   
                 <div class="booking_content_date m-16">
                     <span class="b-16">日期：
@@ -84,32 +104,39 @@
                         src="{{ url_for('static', filename='icon/delete.png') }}" alt="close"></button>
             </div> -->
 
-            
+
             <div class="separator"> </div>
             <div class="contact">
                 <div class="contact_title b-19">您的聯絡資訊</div>
-                <div class="contact_name m-16">聯絡姓名：<input class="contact_input" id="contactName" type="text"
+                <div class="contact_name m-16">聯絡姓名：<input class="contact_input" id="contactName" type=""
                         placeholder="Yakko"></input></div>
-                <div class="contact_email m-16">連絡信箱：<input class="contact_input" id="contactEmail" type="email"
+                <div class="contact_email m-16">連絡信箱：<input class="contact_input" id="contactEmail" type=""
                         placeholder="wehelp@pada-x.com"></input></div>
-                <div class="contact_phone m-16">手機號碼：<input class="contact_input" id="contactPhone" type="tel"></input>
+                <div class="contact_phone m-16">手機號碼：<input class="contact_input" id="contactPhone" type=""></input>
                 </div>
                 <div class="contact_notice b-16">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
             </div>
             <div class="separator"> </div>
+
+
             <div class="payment">
                 <div class="payment_title b-19">信用卡付款資訊</div>
-                <div class="payment_critcard m-16">卡片號碼：<input class="payment_input" id="creditCard" type="text" size=20
-                        placeholder="**** **** **** ****"></input></div>
-                <div class="payment_exp m-16">過期時間：<input class="payment_input" id="exp" type="text"
-                        placeholder="MM / YY"></input></div>
-                <div class="payment_password m-16">驗證密碼：<input class="payment_input" id="creditCardPassword" type="text"
-                        placeholder="CV V"></input></div>
+                <div class="payment_critcard m-16">卡片號碼：
+                    <div class="tpfield" id="card-number">  </div>
+                </div>
+                <div class="payment_exp m-16">過期時間：
+                    <div class="tpfield" id="card-expiration-date" ></div>
+                </div>
+                <div class="payment_password m-16">驗證密碼：
+                    <div class="tpfield" id="card-ccv" ></div>
+                </div>
+
             </div>
+
             <div class="separator"> </div>
-            <div class="total" id ="total">
+            <div class="total" id="total">
                 <!-- <div class="total_price b-16">總價：新台幣 2000 元</div> -->
-                <button class="total_btn">確認訂單並付款</button>
+                <button class="total_btn" id="total_btn">確認訂單並付款</button>
             </div>
         </div>
         <div class="message m-16" id="message"></div>
@@ -121,6 +148,10 @@
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename = 'booking.js') }}"></script><!-- 連到js -->
     <script type="text/javascript" src="{{ url_for('static', filename = 'signin.js') }}"></script><!-- 連到js -->
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <script type="text/javascript" src="/static/payment .js"></script><!-- 連到js -->
+    
 </body>
+
 
 </html>

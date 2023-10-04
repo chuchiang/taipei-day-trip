@@ -142,12 +142,6 @@ img{
   left: 50%;
 }
 .ldio-qil3bdsdgd div { box-sizing: content-box; }
-
-
-
-.wrap{
-    margin: 0 auto;
-} 
 #loadingScreen {
     position: fixed;
     width: 100%;
@@ -156,7 +150,12 @@ img{
     z-index: 9999;
     display: flex;
 }
-  
+
+
+.wrap{
+    margin: 0 auto;
+} 
+
 .overlay{
     display: none;
     position: fixed;
