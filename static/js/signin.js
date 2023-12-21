@@ -217,7 +217,7 @@ function memberButton() {
 
     let memberButton = document.createElement('button');
     memberButton.classList.add('navigation_menu_item');
-    memberButton.textContent = "會員中心";
+    memberButton.textContent = "訂單紀錄";
 
     let navigation_menu = document.getElementById('navigation_menu');
     navigation_menu.prepend(memberButton);

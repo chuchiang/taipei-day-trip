@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attraction</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='attraction.css') }}"> <!--連到css-->
-</head>
+    <link rel="stylesheet" href="../static/styles/attraction.css">
+    <link rel="icon" href="../static/img/icon/travel-map.png" type="image/x-icon"/>
 </head>
 <body>
     <div class="wrap">
@@ -33,7 +33,7 @@
             <div class="signin_bar"></div>
             <div class="signin_header">
                 <div class="signin_account">登入會員帳號</div>
-                <button class="signin_img" id="signin_close"><img src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+                <button class="signin_img" id="signin_close"><img src="{{ url_for('static', filename='img/icon/close.png') }}" alt="close"></button>
             </div>
             <input class="signin_email" name="signin_email" placeholder="輸入電子信箱" id="signInEmail">
             <input class="signin_password" name="signin_password" placeholder="輸入密碼" id="signinPassword" type="password">
@@ -45,7 +45,7 @@
             <div class="signup_bar"></div>
             <div class="signup_header">
                 <div class="signup_account">註冊會員帳號</div>
-                <button class="signup_img" id="signup_close"><img src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+                <button class="signup_img" id="signup_close"><img src="{{ url_for('static', filename='img/icon/close.png') }}" alt="close"></button>
             </div>
             <input class="signup_name" name="signup_name" placeholder="輸入姓名" id="signUpName">
             <input class="signup_email" name="signup_email" placeholder="輸入電子郵件" id="signUpEmail">
@@ -58,7 +58,7 @@
             <div class="navigation_logo"><a href="/">
                 <h2>台北一日遊</h2></a>
             </div>
-            <div class="navigation_menu">
+            <div class="navigation_menu" id="navigation_menu">
                 <button class="navigation_menu_item" id="booking_btn">預定行程</button>
                 <button class="navigation_menu_item" id="menu_signin_btn">登入/註冊</button>
             </div>
@@ -111,8 +111,8 @@
                     <li class="attraction_imgs_content_unactive"><img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="picture"></li>
                
                 </ul> -->
-                <button class="attraction_imgs_leftbtn" id="leftbtn"><img src="{{ url_for('static', filename='icon/btn_leftArrow.png') }}" alt="leftArrow"></button>
-                <button class="attraction_imgs_rightbtn" id="rightbtn"><img src="{{ url_for('static', filename='icon/btn_rightArrow.png') }}" alt="rightArrow"></button>
+                <button class="attraction_imgs_leftbtn" id="leftbtn"><img src="{{ url_for('static', filename='img/icon/btn_leftArrow.png') }}" alt="leftArrow"></button>
+                <button class="attraction_imgs_rightbtn" id="rightbtn"><img src="{{ url_for('static', filename='img/icon/btn_rightArrow.png') }}" alt="rightArrow"></button>
                 <!-- <ul id="dots" class="attraction_imgs_btns">
                     <li></li>
                     <li></li>
@@ -154,12 +154,11 @@
         </div>
         <div class="footer" id="judge_footer">
             <span class="footer_p">
-                <p>COPYRIGHT © 2021 台北一日遊2</p>
+                <p>COPYRIGHT © 2021 台北一日遊</p>
             </span>
         </div>
     </div>
-    <script type="text/javascript" src="{{ url_for('static', filename = 'attraction.js') }}"></script><!-- 連到js -->
-    <script type="text/javascript" src="{{ url_for('static', filename = 'signin.js') }}"></script><!-- 連到js -->
-    
+    <script type="text/javascript" src="/static/js/signin.js"></script>
+    <script type="text/javascript" src="/static/js/attraction.js"></script>
 </body>
 </html>

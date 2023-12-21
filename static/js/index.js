@@ -1,6 +1,5 @@
 //loading畫面
 let loadingScreen = document.getElementById("loadingScreen");
-loadingScreen.style.display = "none";
 
 //listbar 生成
 document.addEventListener("DOMContentLoaded", function () {
@@ -136,7 +135,6 @@ function loadNextPage() {
                             imagesLoaded++;
                             if (imagesLoaded === dataLength) {
                                 // 所有圖片載入完成，隱藏 loading 畫面
-                                console.log(loadedElements);
                                 closeLoadingScreen();
                             }
                         }
@@ -187,7 +185,7 @@ function loadNextPage() {
             isLoading = false;
 
         });
-    //loadingScreen.style.display = "none";//loading畫面
+    loadingScreen.style.display = "none";
 }
 
 function closeLoadingScreen() {
@@ -270,7 +268,6 @@ async function searchAttractions() {
                         imagesLoaded++;
                         if (imagesLoaded === dataLength) {
                             // 所有圖片載入完成，隱藏 loading 畫面
-                            console.log(loadedElements);
                             closeLoadingScreen();
                         }
                     }

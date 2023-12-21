@@ -1,4 +1,7 @@
-
+window.addEventListener("load", function () {
+    let loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.style.display = "none";
+});
 TPDirect.setupSDK(137098, 'app_Bzm0eKHQais3yAdgkFLfescbjqLsi9Yz4QfJW03PFQiOsdrJCCT2pSjQAsIT', 'sandbox')
 
 let fields = {

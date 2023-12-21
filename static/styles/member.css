@@ -51,136 +51,19 @@ body {
 }
 img{
     display: block;
-    /* max-width: 100%; */
+    max-width: 100%;
 }
-ul{
-    list-style: none;
-}
-a{
-    text-decoration: none;
-    color: inherit; 
-}
-.b-19{
-    color: var(--secondary-color-gray-70, #666);
-    font-size: 19px;
-    font-weight: 700;
-    line-height: 16px; 
-}
-.b-16{
-    color: var(--secondary-color-gray-70, #666);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 14px; 
-}
-.m-16{
-    color: var(--secondary-color-gray-70, #666);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 14px; 
-}
-/* loadingwindow */
-/* loading */
-@keyframes ldio-qil3bdsdgd {
-    0% { opacity: 1 }
-    100% { opacity: 0 }
-  }
-  .ldio-qil3bdsdgd div {
-    left: 94px;
-    top: 48px;
-    position: absolute;
-    animation: ldio-qil3bdsdgd linear 1s infinite;
-    background: #448899;
-    width: 12px;
-    height: 24px;
-    border-radius: 6px / 12px;
-    transform-origin: 6px 52px;
-    
-  }.ldio-qil3bdsdgd div:nth-child(1) {
-    transform: rotate(0deg);
-    animation-delay: -0.9166666666666666s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(2) {
-    transform: rotate(30deg);
-    animation-delay: -0.8333333333333334s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(3) {
-    transform: rotate(60deg);
-    animation-delay: -0.75s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(4) {
-    transform: rotate(90deg);
-    animation-delay: -0.6666666666666666s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(5) {
-    transform: rotate(120deg);
-    animation-delay: -0.5833333333333334s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(6) {
-    transform: rotate(150deg);
-    animation-delay: -0.5s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(7) {
-    transform: rotate(180deg);
-    animation-delay: -0.4166666666666667s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(8) {
-    transform: rotate(210deg);
-    animation-delay: -0.3333333333333333s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(9) {
-    transform: rotate(240deg);
-    animation-delay: -0.25s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(10) {
-    transform: rotate(270deg);
-    animation-delay: -0.16666666666666666s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(11) {
-    transform: rotate(300deg);
-    animation-delay: -0.08333333333333333s;
-    background: #448899;
-  }.ldio-qil3bdsdgd div:nth-child(12) {
-    transform: rotate(330deg);
-    animation-delay: 0s;
-    background: #448899;
-  }
-  .loadingio-spinner-spinner-o5dixidgmqa {
-    width: 200px;
-    height: 200px;
-    display: inline-block;
-    overflow: hidden;
-    background: #ffff;
-    position: relative;
-    transform: translate(-50%, -50%);
-    top:50%;
-    left: 50%;
-  
-  }
-  .ldio-qil3bdsdgd {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    backface-visibility: hidden;
-    transform-origin: 0 0;  
-    transform: translate(-50%, -50%);
-    top:50%;
-    left: 50%;
-  }
-  .ldio-qil3bdsdgd div { box-sizing: content-box; }
-  #loadingScreen {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: white;
-      z-index: 9999;
-      display: flex;
-  }
-
 .wrap{
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     min-height: 100vh;
+} 
+.m-16{
+    color: var(--secondary-color-gray-70, #000);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 14px; 
 }
 .overlay{
     display: none;
@@ -228,7 +111,6 @@ a{
     padding-bottom: 15px;
     padding: 15px 15px 15px 15px;
     align-items: center;
-
 }
 .signin_img{
     border: 0;
@@ -323,7 +205,7 @@ a{
     top: 50%;
     left: 50%;
     position: fixed;/*固定定位*/
-   display: none;
+    display: none;
     z-index: 1000;/*較高的疊放層次*/
 }
 .signup_bar{
@@ -337,7 +219,6 @@ a{
     justify-content: end;
     margin: 0 10px 0 10px;   
 }
-
 .signup_account{
     width: 190px;
     font-size: 24px;
@@ -387,7 +268,6 @@ a{
     outline: none;
     border: 0;
 }
-
 .signup_password{
     width: 280px;
     padding: 15px;
@@ -434,17 +314,21 @@ a{
     margin: 0 15px 10px 15px;
 }
 .navigation{
+    margin: 0 auto;
     display: flex;
+    width: 1200px;
     justify-content: space-between;
     padding: 10px 0 10px 0;
-    width: 1200px;
-    margin: 0 auto;
 }
 .navigation_logo{
     font-size: 30px;
     color: #448899;
     font-weight: bold;
     line-height: 34px;
+}
+.navigation_logo a{
+    text-decoration: none;
+    color: #448899;
 }
 .navigation_menu{
     display:flex;
@@ -453,7 +337,6 @@ a{
 .navigation_menu_item{
     padding: 10px;
     color: #666666;
-    font-family:Noto Sans TC;
     font-size: 16px;
     font-weight: 500;
     line-height: 13.3px; 
@@ -461,10 +344,8 @@ a{
     border:0;
     outline: 0;
     cursor: pointer;
+    font-family: Noto Sans TC;
 }
-
-
-
 .navigation_menu_item:hover{
     font-weight: 700;
     cursor: pointer;
@@ -473,178 +354,37 @@ a{
 .separator_logo{
     border-top: 1px solid #E8E8E8;
 }
-.headline{
-    padding-top: 46px;
-    width: 1000px;
-    margin: 0 auto;
-}
-.headline_content{
-    padding-bottom: 35px;
-}
-.booking{
-    width: 980px;
-    margin: 0 auto;
-    display: flex;
-    margin-bottom: 40px;
-    position: relative;
-    border-radius: 5px;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
-}
-.booking_img{
-    width: 250px;
-    height: 200px;
-    margin-right: 30px;
-}
-.booking_img img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px 0 0 5px;
-}
 
-.booking_content_name{
-    color: var(--primary-color-cyan-70, #489);
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 14px;
-    padding-bottom: 20px;
-    padding-top: 10px;
-}
-.booking_content_date{
-    padding-bottom: 20px;
-}
-.booking_content_time{
-    padding-bottom: 20px;
-}
-.booking_content_price{
-    padding-bottom: 20px;
-}
-.booking_delete {
-    border: 0;
-    outline: 0;
-    background:#FFFFFF;
-    cursor: pointer;
-    right: 0;
-    top: 0;
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    margin: 10px;
-}
-.booking_delete img{
-    right: 0;
-    top: 0;
-    position: absolute;
-}
-
-.separator{
-    border-top: 1px solid #E8E8E8;
-    width: 1200px;
-    margin: 0 auto;
-}
-.contact{
-    width: 980px;
-    margin: 0 auto;
-    padding: 44px 0 45px 0;
-}
-.contact_title{
-    padding-bottom: 24px;
-}
-.contact_name{
-    padding-bottom: 15px;
-}
-.contact_input{
-    width: 180px;
-    color: var(--additional-color-black, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 13.3px; 
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--Gray-300, #E8E8E8);
-    background: var(--White, #FFF); 
-    outline: none;
-}
-.contact_input::placeholder{
-    color: var(--additional-color-black, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 13.3px; 
-}
-.contact_email{
-padding-bottom: 15px;
-}
-.contact_phone{
-    padding-bottom: 20px;
-}
-.payment{
-    width: 980px;
-    margin: 0 auto;
-    padding: 44px 0 40px 0;
-}
-.payment_title{
-    padding-bottom: 24px;
-}
-.payment_critcard{
-    padding-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-.tpfield{
-    width: 180px;
-    height: 18px;
-    color: var(--additional-color-black, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 13.3px; 
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--Gray-300, #E8E8E8);
-    background: var(--White, #FFF); 
+.contant{
+    padding: 40px 0 40px 0;
     
-}
-
-.payment_exp{
-    padding-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-.payment_password{
-    display: flex;
-    align-items: center;
-}
-
-.total{
-    width: 980px;
-    margin: 0 auto;
-    padding-top: 43px;
-    text-align: right;
-}
-.total_price{
-    padding-bottom: 25px;
-}
-.total_btn{
-    right: 0;
-    color: var(--additional-color-white, #FFF);
     text-align: center;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 16px; 
-    background: var(--primary-color-cyan-70, #489);
-    border:0;
+}
+.contact_record{
+    width: 800px;
     border-radius: 5px;
+    border: 1px solid #757575;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.contact_recordd_btn{
+    border: 0;
+    border-radius: 5px;
+    background: var(--primary-color-cyan-70, #489);
+    color: #ffff;
     padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
     cursor: pointer;
 }
-.total_btn:hover{
-    background-color: var(--primary-color-cyan-50, #6AB);
-}
-.message{
-    width: 1000px;
-    margin: 0 auto;
-}
+
 .footer{
-    margin-top: 63px;
     background-color: #757575;
     padding: 40px 0 40px 0;
     flex-grow: 1; /* 內容佔滿剩餘高度 */
@@ -659,75 +399,33 @@ padding-bottom: 15px;
 
 
 @media (max-width: 1200px){
-    .wrap,.navigation,.separator_logo{
-        max-width: 100%;
+    .wrap,.navigation,.separator_logo.contact{
+        max-width: 90%;
     }
-    .message,.headline,.booking,.separator,.contact,.payment,.total{
-        max-width: 95%;
+    .contact_record{
+        max-width: 90%;
     }
     .footer{
         max-width: 100%;
     }
     .navigation_menu_item{
         padding: 5px;
-    }  
+    } 
 
 }
 @media (max-width: 600px){
-    .wrap,.navigation,.separator_logo{
+    .wrap,.navigation,.separator_logo.contact{
         max-width: 100%;
     }
-    .message,.headline,.booking,.separator,.contact,.payment,.total{
-        max-width: 95%;
+    .contact_record{
+        max-width: 90%;
     }
     .footer{
         max-width: 100%;
     }
-    .booking{
-        flex-wrap: wrap;
-        position: relative;
-        margin-bottom: 20px;
-        padding-bottom: 20px;
-    }
-    .booking_img img{
-        width: 100%;
-        border-radius: 5px 5px 0 0;/*左上 右上 右下 左下*/
-       
-    }
-    .booking_content{
-        margin-left: 10px;
-    }
-    .booking_content_name{
-        padding-top: 0;
-    }
-    .booking_content{
-        margin-top: 35px;
-    }
-    .booking_delete{
-        top: auto; /*移除 top 屬性 */
-        bottom: 0px;
-        position: absolute;
-    }
-    .booking_delete img {
-        top: auto;  /*移除 top 屬性 */
-        bottom: 0px;
-        position: absolute;
-    }
-    .booking_img{
-        width: 100%;
-        height: 200px;
-        margin-right: 0;
-    }
-    .booking_img img{
-        max-width: 100%;
-        max-height: 100%;
-    }
-
-    .contact_notice{
-        line-height: 23px;
-    }
     .navigation_menu_item{
         padding: 5px;
-    }  
+    }   
+
 
 }

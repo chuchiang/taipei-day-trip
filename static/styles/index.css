@@ -646,7 +646,7 @@ img{
     cursor: pointer;
 }
 .content_listbar_left img:hover{
-    content: url("/static/icon/arrow_left_hovered.png");
+    content: url("/static/img/icon/arrow_left_hovered.png");
 }
 .content_listbar_right{
     outline: none;
@@ -656,7 +656,7 @@ img{
     cursor: pointer;
 }
 .content_listbar_right img:hover{
-   content: url("/static/icon/arrow_right_hovered.png");
+   content: url("/static/img/icon/arrow_right_hovered.png");
 }
 .content_listbar_box{
     overflow: hidden;
@@ -696,11 +696,16 @@ img{
     background: var(--White, #FFF);
     cursor: pointer;
 }
+.content_list_att:hover{
+    transform: scale(1.05);
+    transition: 0.5s;
+}
 .content_list_att_img img{
     width: 268px;
     height: 197px;
     object-fit: cover; /* 自動裁切圖片，保持圖片比例 */
 }
+
 .content_list_att_img{
     position: relative;
 }
@@ -749,6 +754,9 @@ img{
     font-size: 16px;
 }
 @media (max-width: 1200px) {
+    #observer_loadingScreen{
+        max-width: 100%;
+    }
     .navigation{
         width: 100%;
     }
@@ -809,7 +817,9 @@ img{
 }
 
 @media (max-width:600px) {
-    
+    #observer_loadingScreen{
+        max-width: 100%;
+    }
     .navigation{
         width: 96.8%;
         padding-left: 10px;

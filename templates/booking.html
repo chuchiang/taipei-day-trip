@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
+    <link rel="icon" href="static/img/icon/travel-map.png" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='booking.css') }}"> <!--連到css-->
+    <link rel="stylesheet" href="../static/styles/booking.css">
 </head>
 
 <body>
@@ -36,7 +37,7 @@
             <div class="signin_header">
                 <div class="signin_account">登入會員帳號</div>
                 <button class="signin_img" id="signin_close"><img
-                        src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+                        src="{{ url_for('static', filename='img/icon/close.png') }}" alt="close"></button>
             </div>
             <input class="signin_email" name="signin_email" placeholder="輸入電子信箱" id="signInEmail">
             <input class="signin_password" name="signin_password" placeholder="輸入密碼" id="signinPassword"
@@ -50,7 +51,7 @@
             <div class="signup_header">
                 <div class="signup_account">註冊會員帳號</div>
                 <button class="signup_img" id="signup_close"><img
-                        src="{{ url_for('static', filename='icon/close.png') }}" alt="close"></button>
+                        src="{{ url_for('static', filename='img/icon/close.png') }}" alt="close"></button>
             </div>
             <input class="signup_name" name="signup_name" placeholder="輸入姓名" id="signUpName">
             <input class="signup_email" name="signup_email" placeholder="輸入電子郵件" id="signUpEmail">
@@ -65,7 +66,7 @@
                     <h2>台北一日遊</h2>
                 </a>
             </div>
-            <div class="navigation_menu">
+            <div class="navigation_menu" id="navigation_menu">
                 <button class="navigation_menu_item" id="booking_btn">預定行程</button>
                 <button class="navigation_menu_item" id="menu_signin_btn">登入/註冊</button>
             </div>
@@ -146,11 +147,10 @@
             </span>
         </div>
     </div>
-    <script type="text/javascript" src="{{ url_for('static', filename = 'booking.js') }}"></script><!-- 連到js -->
-    <script type="text/javascript" src="{{ url_for('static', filename = 'signin.js') }}"></script><!-- 連到js -->
     <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
-    <script type="text/javascript" src="/static/payment .js"></script><!-- 連到js -->
-    
+    <script type="text/javascript" src="./static/js/payment .js"></script><!-- 連到js -->
+    <script type="text/javascript" src="./static/js/signin.js"></script><!-- 連到js -->
+    <script type="text/javascript" src="./static/js/booking.js"></script><!-- 連到js -->
 </body>
 
 

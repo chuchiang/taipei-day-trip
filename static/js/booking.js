@@ -96,7 +96,7 @@ let fetchUrl = async()=>{
                     
 
                     let deleteImage = document.createElement('img');
-                    deleteImage.src = `/static/icon/delete.png`;
+                    deleteImage.src = `/static/img/icon/delete.png`;
 
                     let price =list.data.price;
                     totalRrice = totalRrice + price
