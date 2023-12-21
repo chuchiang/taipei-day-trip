@@ -788,7 +788,7 @@ li.dot--active {
 }
 
 .attraction_tour_booking_trip_calendar::-webkit-calendar-picker-indicator {
-    background-image: url("icon/calendar.png");
+    background-image: url("/static/img/icon/calendar.png");
     background-size: cover;
     width: 24px;
     height: 24px;

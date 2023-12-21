@@ -1,35 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thankyou</title>
     <link rel="icon" href="static/img/icon/travel-map.png" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/styles/thankyou.css">
+    <link rel="stylesheet" href="../static/styles/member.css">
+    <title>member</title>
 </head>
-
 <body>
     <div class="wrap">
-        <div id="loadingScreen">
-            <div class="loadingio-spinner-spinner-o5dixidgmqa">
-                <div class="ldio-qil3bdsdgd">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-        </div>
         <div class="overlay" id="overlay"></div>
         <div class="signin" id="signinBox">
             <div class="signin_bar"></div>
@@ -71,25 +51,18 @@
             </div>
         </div>
         <div class="separator_logo"></div>
-        <div class="contact">
-            <div class="contact_message m-16" id="contact_message"></div>
-            <div class="block" id="block">
-                <div class="contact_img"><img src="{{ url_for('static', filename='img/icon/reservation.png') }}"
-                        alt="reservation"></div>
-                <div class=" b-22">訂單已付款完成</div>
-                <div class="contact_number" id="contact_number">
-                    <!-- <div class="contact_number_order">訂單編號.....</div> -->
-                </div>
-                <div class="contact_number_attraction b-16">已預定的行程：</div>
-                
-            </div>
+        <div class="contant" id="contant">
+            <!-- <div class="contact_record" id="contact_record">
+                <div class="contact_record_number m-16">202310134567</div>
+                <button class="contact_recordd_btn">訂單紀錄</button>
+            </div> -->
         </div>    
         <div class="footer" id="judge_footer">
             <span class="footer_p">
             <p>COPYRIGHT © 2021 台北一日遊</p>
         </span>
         <script type="text/javascript" src="/static/js/signin.js"></script>
-        <script type="text/javascript" src="/static/js/thankyou.js"></script>
+        <script type="text/javascript" src="/static/js/member.js"></script>
+        
 </body>
-
 </html>
