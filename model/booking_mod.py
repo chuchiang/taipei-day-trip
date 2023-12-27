@@ -1,5 +1,5 @@
 from flask import *
-from modules.mysql_cnx import execute_query
+from model.mysql_cnx import execute_query
 
 def bookind_db(member_id):
     query = "SELECT booking.member_id,\

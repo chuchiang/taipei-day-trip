@@ -1,6 +1,6 @@
 
 from flask import *
-from modules.mysql_cnx import execute_query
+from model.mysql_cnx import execute_query
 
 
 def attraction_db(keyword, start_index, end_index):

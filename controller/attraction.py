@@ -1,5 +1,5 @@
 from flask import*
-from modules.attraction_mod import attraction_db,attraction_next_db,attraction_id_db
+from model.attraction_mod import attraction_db,attraction_next_db,attraction_id_db
 #建立Blueprint
 from flask import Blueprint
 attracion_api = Blueprint("attracion_api",__name__)
