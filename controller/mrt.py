@@ -1,6 +1,6 @@
 from flask import*
-from modules.mysql_cnx  import execute_query
-from modules.mrt_mod import mrt_db
+from model.mysql_cnx  import execute_query
+from model.mrt_mod import mrt_db
 #建立Blueprint
 from flask import Blueprint
 mrt_api = Blueprint("mrt_api",__name__)

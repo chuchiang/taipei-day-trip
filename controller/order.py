@@ -1,5 +1,5 @@
 from flask import *
-from modules.order_mod import order_db,ok_delete_db,ok_update_db,false_update_db,ordernumber_db,memberorder_db
+from model.order_mod import order_db,ok_delete_db,ok_update_db,false_update_db,ordernumber_db,memberorder_db
 from controller.signin import signin_judge
 from datetime import datetime
 import random

@@ -1,5 +1,5 @@
 from flask import *
-from modules.mysql_cnx import execute_query
+from model.mysql_cnx import execute_query
 
 
 def order_db(member_id, order_number, payment_status, attraction_id,date, time, price, contact_name, contact_phone, contact_email):

@@ -1,5 +1,5 @@
 from flask import *
-from modules.booking_mod import bookind_db, booking_build_db, booking_delete_db
+from model.booking_mod import bookind_db, booking_build_db, booking_delete_db
 from controller.signin import signin_judge
 from flask import Blueprint
 booking_api = Blueprint("booking_api", __name__)

@@ -1,6 +1,6 @@
 from flask import *
 import time
-from modules.member_mod import user_db, signin_db,user_email_db
+from model.member_mod import user_db, signin_db,user_email_db
 import jwt
 # 建立Blueprint
 from flask import Blueprint
