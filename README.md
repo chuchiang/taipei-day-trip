@@ -9,6 +9,7 @@ A travel e-commerce website that enables users to discover tourist attractions i
 - Frontend
   - HTML
   - CSS
+  - RWD
   - JavaScript
 - Backend
   - Python Flask
@@ -16,6 +17,10 @@ A travel e-commerce website that enables users to discover tourist attractions i
   - MySQL
 - Cloud service
   - AWS EC2
+
+## Architecture
+Utilizing the MVC architecture and implemented with Flask Blueprint.
+![architecture.jpg](static/readme/architecture.jpg)
 
 ## Testing Account
 - Email : test@test.com
